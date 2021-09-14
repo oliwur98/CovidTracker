@@ -3,6 +3,7 @@ package com.example.covidtracker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,24 +29,33 @@ public class signUp extends AppCompatActivity {
         BtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String Firstname, Lastname, Email, SSN, Password, PasswordConfirm;
-                int finalSSN;
-                Firstname = String.valueOf(EditTextFirstname.getText());
-                Lastname = String.valueOf(EditTextLastname.getText());
-                Email = String.valueOf(EditTextEmail.getText());
-                SSN = String.valueOf(EditTextSSN.getText());
-                finalSSN = Integer.parseInt(SSN);
-                Password = String.valueOf(EditTextPassword.getText());
-                PasswordConfirm = String.valueOf(EditTextPasswordConfirm.getText());
-                Toast.makeText(getApplicationContext(), "missing stuff",Toast.LENGTH_LONG);
-             /*   if(!Firstname.equals("") && !Lastname.equals("") && !Email.equals("") && !SSN.equals("") && !Password.equals("") && !PasswordConfirm.equals("")) {
-
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "missing stuff",Toast.LENGTH_LONG);
-                }*/
+            SignUpCheck();
             }
         });
     }
+    boolean isEmpty(EditText text){
+        CharSequence seq = text.getText().toString();
+        return TextUtils.isEmpty(seq);
+    }
+    public void SignUpCheck(){
+        if(isEmpty(EditTextFirstname)){
+            EditTextFirstname.setError("Field is required");
+        }
+        if(isEmpty(EditTextLastname)){
+            EditTextLastname.setError("Field is required");
+        }
+        if(isEmpty(EditTextEmail)){
+            EditTextEmail.setError("Field is required");
+        }
+        if(isEmpty(EditTextSSN)){
+            EditTextSSN.setError("Field is required");
+        }
+        if(isEmpty(EditTextPassword)){
+            EditTextPassword.setError("Field is required");
+        }
+        if(isEmpty(EditTextPasswordConfirm)){
+            EditTextPasswordConfirm.setError("Field is required");
+        }
 
+    }
 }
