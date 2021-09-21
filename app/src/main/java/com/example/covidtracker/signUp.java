@@ -2,19 +2,21 @@ package com.example.covidtracker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class signUp extends AppCompatActivity {
     //register stuff
-    EditText EditTextFirstname, EditTextLastname, EditTextEmail, EditTextSSN, EditTextPassword, EditTextPasswordConfirm;
+    private EditText EditTextFirstname, EditTextLastname, EditTextEmail, EditTextSSN, EditTextPassword, EditTextPasswordConfirm;
     Button BtnSignUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,20 @@ public class signUp extends AppCompatActivity {
         BtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            SignUpCheck();
+
+            // SignUpCheck();
+
+            if(SignUpCheck()){
+
+                Toast.makeText(signUp.this, "SignUp successful", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(signUp.this,login.class);
+                startActivity(intent);
+            }
+                else{
+                Toast.makeText(signUp.this, "SignUp failed", Toast.LENGTH_SHORT).show();
+                 }
+
+
             }
         });
     }
@@ -52,36 +67,51 @@ public class signUp extends AppCompatActivity {
         return (!Patterns.EMAIL_ADDRESS.matcher(seq).matches());
     }
 
-    public void SignUpCheck() {
-
+    boolean SignUpCheck() {
+        int counter =0;
         if (isEmpty(EditTextFirstname)) {
             EditTextFirstname.setError("Field is required");
-        } else if (noNumber(EditTextFirstname)) {
+        }
+        else if (noNumber(EditTextFirstname)) {
             EditTextFirstname.setError("Only letters");
         }
+        else counter++;
+
         if (isEmpty(EditTextLastname)) {
             EditTextLastname.setError("Field is required");
-        } else if (noNumber(EditTextLastname)) {
+        }
+        else if (noNumber(EditTextLastname)) {
             EditTextLastname.setError("Only letters");
         }
+        else counter++;
+
         if (isEmpty(EditTextEmail)) {
             EditTextEmail.setError("Field is required");
-        } else if (realEmail(EditTextEmail)) {
+        }
+        else if (realEmail(EditTextEmail)) {
             EditTextEmail.setError("Enter a valid email");
         }
+        else counter++;
 
         if (isEmpty(EditTextSSN)) {
             EditTextSSN.setError("Field is required");
         }
+        else counter++;
+
         if (isEmpty(EditTextPassword)) {
             EditTextPassword.setError("Field is required");
         }
+        else counter++;
+
         if (isEmpty(EditTextPasswordConfirm)) {
             EditTextPasswordConfirm.setError("Field is required");
-        } else if (EditTextPassword.getText().toString() == EditTextPasswordConfirm.getText().toString()) {
+        }
+        else if (!(EditTextPassword.getText().toString().equals(EditTextPasswordConfirm.getText().toString()))) {
             EditTextPasswordConfirm.setError("Password doesn't match");
         }
-
+        else counter++;
+        if(counter == 6) return true;
+        else return false;
 
     }
     }
