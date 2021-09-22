@@ -1,11 +1,14 @@
 package com.example.covidtracker;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -13,9 +16,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class signUp extends AppCompatActivity {
@@ -23,6 +32,8 @@ public class signUp extends AppCompatActivity {
     private EditText EditTextFirstname, EditTextLastname, EditTextEmail, EditTextSSN, EditTextPassword, EditTextPasswordConfirm;
     private Button BtnSignUp;
     private FirebaseAuth auth;
+    private FirebaseFirestore userData;
+    String UserID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +47,7 @@ public class signUp extends AppCompatActivity {
         EditTextPasswordConfirm =(EditText) findViewById(R.id.VerifyPassword_signup);
         BtnSignUp =(Button) findViewById(R.id.BtnRegister);
         auth = FirebaseAuth.getInstance();
+        userData = FirebaseFirestore.getInstance();
         BtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +69,20 @@ public class signUp extends AppCompatActivity {
                             Toast.makeText(signUp.this, "SignUp failed", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(signUp.this, "SignUp successful", Toast.LENGTH_SHORT).show();
+                            UserID = auth.getCurrentUser().getUid();
+                            DocumentReference documentReference =userData.collection("Users").document(UserID);
+                            Map<String,Object> user = new HashMap<>();
+                            user.put("firstName", EditTextFirstname.getText().toString());
+                            user.put("lastName", EditTextLastname.getText().toString());
+                            user.put("SSN", EditTextSSN.getText().toString());
+                            user.put("email", EditTextEmail.getText().toString());
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                               Log.d(TAG,"created"+ UserID);
+                                }
+                            });
+
                             Intent intent = new Intent(signUp.this,login.class);
                             startActivity(intent);
                         }

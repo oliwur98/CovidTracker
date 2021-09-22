@@ -63,7 +63,7 @@ public class login extends AppCompatActivity {
                                         Toast.makeText(login.this, "SignUp failed", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(login.this, "SignUp successful", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(login.this,signUp.class);
+                                        Intent intent = new Intent(login.this,dashboard.class);
                                         startActivity(intent);
                                     }
                                 }
