@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -111,12 +113,20 @@ public class signUp extends AppCompatActivity {
         CharSequence seq = text.getText().toString();
         return (!Patterns.EMAIL_ADDRESS.matcher(seq).matches());
     }
-
+    boolean yearCheck(EditText text){
+        Date date = new Date();
+        String SSN = text.getText().toString();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String sdfDate = sdf.format(date);
+        String newSSN = SSN.substring(0, SSN.length() - 4);
+        return Integer.parseInt(sdfDate) - Integer.parseInt(newSSN) < 180000;
+    }
     boolean SignUpCheck() {
         int counter =0;
         if (isEmpty(EditTextFirstname)) {
             EditTextFirstname.setError("Field is required");
         }
+
         else if (noNumber(EditTextFirstname)) {
             EditTextFirstname.setError("Only letters");
         }
@@ -141,6 +151,12 @@ public class signUp extends AppCompatActivity {
         if (isEmpty(EditTextSSN)) {
             EditTextSSN.setError("Field is required");
         }
+        else if(!(EditTextSSN.getText().toString().length() == 12)){
+            EditTextSSN.setError("Enter a valid SSN");
+        }
+        else if(yearCheck(EditTextSSN)){
+           EditTextSSN.setError("You must be 18 years old to create and account");
+        }
         else counter++;
 
         if (isEmpty(EditTextPassword)) {
@@ -158,8 +174,12 @@ public class signUp extends AppCompatActivity {
             EditTextPasswordConfirm.setError("Password doesn't match");
         }
         else counter++;
-        if(counter == 6) return true;
-        else return false;
+        if(counter == 6){
+            return true;
+        }
+        else{
+            return false;
+        }
 
     }
     }
