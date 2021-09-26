@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CovidTracker</string>
+    <string name="navDrawerOpen">Open navigation drawer</string>
+    <string name="navDrawerClose">Close navigation drawer</string>
 </resources>

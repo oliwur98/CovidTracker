@@ -35,23 +35,20 @@ public class login extends AppCompatActivity {
            startactivity
         }*/
 
-        /* public void logout(View view){
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(),Login.class));        Logout, send them to login class
-         */
+
         EditTextEmail = (EditText) findViewById(R.id.Email);
         EditTextPassword = (EditText) findViewById(R.id.Password);
         textView = (TextView) findViewById(R.id.txtRegister);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         textView.setOnClickListener(view -> {
-            Intent intent = new Intent(login.this,signUp.class);
+            Intent intent = new Intent(login.this, signUp.class);
             startActivity(intent);
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(LoginCheck()){
-                    auth.signInWithEmailAndPassword(EditTextEmail.getText().toString(),EditTextPassword.getText().toString())
+                if (LoginCheck()) {
+                    auth.signInWithEmailAndPassword(EditTextEmail.getText().toString(), EditTextPassword.getText().toString())
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -63,7 +60,7 @@ public class login extends AppCompatActivity {
                                         Toast.makeText(login.this, "SignUp failed", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(login.this, "SignUp successful", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(login.this,dashboard.class);
+                                        Intent intent = new Intent(login.this, dashboard.class);
                                         startActivity(intent);
                                     }
                                 }
@@ -73,7 +70,7 @@ public class login extends AppCompatActivity {
         });
     }
 
-    boolean isEmpty(EditText text){
+    boolean isEmpty(EditText text) {
         CharSequence seq = text.getText().toString();
         return TextUtils.isEmpty(seq);
     }
