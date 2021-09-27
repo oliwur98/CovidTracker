@@ -51,12 +51,14 @@ public class signUp extends AppCompatActivity {
         BtnSignUp = (Button) findViewById(R.id.BtnRegister);
         auth = FirebaseAuth.getInstance();
         userData = FirebaseFirestore.getInstance();
+
+
+
         BtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = EditTextEmail.getText().toString();
                 String password = EditTextPassword.getText().toString();
-
 
                 if (SignUpCheck()) {
 
@@ -80,6 +82,8 @@ public class signUp extends AppCompatActivity {
                                         user.put("lastName", EditTextLastname.getText().toString());
                                         user.put("SSN", EditTextSSN.getText().toString());
                                         user.put("email", EditTextEmail.getText().toString());
+
+
                                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {

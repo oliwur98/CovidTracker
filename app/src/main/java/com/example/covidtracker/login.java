@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,20 +29,29 @@ public class login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        // if user already logged in
 
-     /*   if(auth.getCurrentUser() != null){    If the user is already logged in
-           startactivity
-        }*/
 
 
         EditTextEmail = (EditText) findViewById(R.id.Email);
         EditTextPassword = (EditText) findViewById(R.id.Password);
         textView = (TextView) findViewById(R.id.txtRegister);
         btnLogin = (Button) findViewById(R.id.btnLogin);
+        auth = FirebaseAuth.getInstance();
+
+        if(auth.getCurrentUser() != null){
+            Intent intent = new Intent(login.this, dashboard.class);
+            startActivity(intent);
+        }
+
+
+
         textView.setOnClickListener(view -> {
             Intent intent = new Intent(login.this, signUp.class);
             startActivity(intent);
         });
+
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

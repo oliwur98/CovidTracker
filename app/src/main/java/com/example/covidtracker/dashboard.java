@@ -20,6 +20,7 @@ public class dashboard extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar myToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +35,14 @@ public class dashboard extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,myToolbar, R.string.navDrawerOpen, R.string.navDrawerClose);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_Logout:
-                        //FirebaseAuth.getInstance().signOut();
+                        FirebaseAuth.getInstance().signOut();
                         Intent intent = new Intent(dashboard.this, login.class);
                         startActivity(intent);
                         break;
