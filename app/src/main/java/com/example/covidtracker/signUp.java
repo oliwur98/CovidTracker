@@ -6,13 +6,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,7 +35,8 @@ import java.util.Map;
 
 public class signUp extends AppCompatActivity {
     //register stuff
-    private EditText EditTextFirstname, EditTextLastname, EditTextEmail, EditTextSSN, EditTextPassword, EditTextPasswordConfirm;
+    private EditText EditTextFirstname, EditTextLastname, EditTextEmail, EditTextSSN, EditTextPassword, EditTextPasswordConfirm, EditTextNumber;
+    private Spinner SpinnerCounty;
     private Button BtnSignUp;
     private FirebaseAuth auth;
     private FirebaseFirestore userData;
@@ -48,10 +53,19 @@ public class signUp extends AppCompatActivity {
         EditTextSSN = (EditText) findViewById(R.id.SSN_signup);
         EditTextPassword = (EditText) findViewById(R.id.Password_signup);
         EditTextPasswordConfirm = (EditText) findViewById(R.id.VerifyPassword_signup);
+        EditTextNumber = (EditText) findViewById(R.id.phonenumber_signup);
+        SpinnerCounty = (Spinner) findViewById(R.id.county_signup);
+
         BtnSignUp = (Button) findViewById(R.id.BtnRegister);
         auth = FirebaseAuth.getInstance();
         userData = FirebaseFirestore.getInstance();
 
+        Spinner dropdown = findViewById(R.id.county_signup);
+
+        String[] items = new String[]{"County", "Blekinge", "Dalarna", "Gotland", "Gävleborg", "Halland", "Jämtland Härjedalen", "Jönköpings län", "Kalmar län", "Kronoberg", "Norrbotten", "Skåne", "Stockholms län", "Sörmland", "Uppsala län", "Värmland", "Västerbotten", "VästerNorrland", "Västmanland", "Västra Götaland", "Örebro län", "Östergötland"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+
+        dropdown.setAdapter(adapter);
 
 
         BtnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +96,8 @@ public class signUp extends AppCompatActivity {
                                         user.put("lastName", EditTextLastname.getText().toString());
                                         user.put("SSN", EditTextSSN.getText().toString());
                                         user.put("email", EditTextEmail.getText().toString());
+                                        user.put("number", EditTextNumber.getText().toString());
+                                        user.put("county", SpinnerCounty.getSelectedItem().toString());
 
 
                                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -171,7 +187,27 @@ public class signUp extends AppCompatActivity {
         } else if (!(EditTextPassword.getText().toString().equals(EditTextPasswordConfirm.getText().toString()))) {
             EditTextPasswordConfirm.setError("Password doesn't match");
         } else counter++;
-        if (counter == 6) {
+
+        if(isEmpty(EditTextNumber)){
+            EditTextNumber.setError("Field is required");
+        }
+        else if(!(EditTextNumber.getText().toString().length() == 10)){
+            EditTextNumber.setError("Max length is 10 numbers");
+        }
+        else if(!EditTextNumber.getText().toString().substring(0, EditTextNumber.length() - 8).equals("07")){
+            EditTextNumber.setError("Must start with 07");
+        }
+        else counter++;
+
+        if(SpinnerCounty.getSelectedItem().equals("County")){
+            TextView errorText = (TextView)SpinnerCounty.getSelectedView();
+            errorText.setError("");
+            errorText.setTextColor(Color.RED);//just to highlight that this is an error
+            errorText.setText("Choose County");//changes the selected item text to this
+        }
+        else counter++;
+
+        if (counter == 8) {
             return true;
         } else {
             return false;
