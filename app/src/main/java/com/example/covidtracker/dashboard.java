@@ -82,12 +82,16 @@ public class dashboard extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.nav_Logout:
                         FirebaseAuth.getInstance().signOut();
-                        Intent intent = new Intent(dashboard.this, login.class);
-                        startActivity(intent);
+                        Intent intent_logout = new Intent(dashboard.this, login.class);
+                        startActivity(intent_logout);
                         break;
                     case R.id.nav_profile:
-                        // Intent intent_profile = new Intent(dashboard.this, activity_profile.class);
-                        // startActivity(intent_profile);
+                        Intent intent_profile = new Intent(dashboard.this, activity_profile.class);
+                        startActivity(intent_profile);
+                        break;
+                    case R.id.nav_faq:
+                        Intent intent_faq = new Intent(dashboard.this, FAQ.class);
+                        startActivity(intent_faq);
                         break;
                 }
 
