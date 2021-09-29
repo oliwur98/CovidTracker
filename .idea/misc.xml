@@ -8,12 +8,20 @@
         <entry key="..\:/Users/banan/AndroidStudioProjects/CovidTracker/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/banan/AndroidStudioProjects/CovidTracker/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/banan/AndroidStudioProjects/CovidTracker/app/src/main/res/layout/activity_sign_up.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/drawable/ic_email.xml" value="0.3828125" />
         <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/drawable/ic_launcher_background.xml" value="0.25625" />
-        <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/layout/activity_dashboard.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/drawable/ic_menu.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/drawable/ic_password.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/drawable/ic_user.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/layout/activity_dashboard.xml" value="0.25" />
         <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/layout/activity_login.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/layout/activity_main.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/layout/activity_profile.xml" value="0.2" />
+        <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/layout/activity_reset_password.xml" value="0.2" />
         <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/layout/activity_sign_up.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/layout/header.xml" value="0.28940217391304346" />
+        <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/menu/main_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3828125" />
         <entry key="..\:/Users/olive/AndroidStudioProjects/CovidTracker/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3828125" />
       </map>

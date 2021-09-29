@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">CovidTracker</string>
-    <string name="commonly_asked_questions">Commonly asked questions</string>
-    <string name="what_is_vaccination">What is vaccination?</string>
-
+    <string name="navDrawerOpen">Open navigation drawer</string>
+    <string name="navDrawerClose">Close navigation drawer</string>
 </resources>
