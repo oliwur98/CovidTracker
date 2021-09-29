@@ -43,5 +43,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation "io.grpc:grpc-okhttp:1.32.2"
-
+    implementation "com.ms-square:expandableTextView:0.1.4"
 }

@@ -31,8 +31,9 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-     /*   if(auth.getCurrentUser() != null){    If the user is already logged in
-           startactivity
+       /*if(auth.getCurrentUser() != null){   //If the user is already logged in
+           Intent intent = new Intent(login.this,dashboard.class);
+           startActivity(intent);
         }*/
 
         /* public void logout(View view){
