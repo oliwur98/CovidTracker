@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class login extends AppCompatActivity {
     EditText EditTextEmail, EditTextPassword;
-    TextView textView;
+    TextView textViewRegister, textViewForgotPassword;
     Button btnLogin;
     FirebaseAuth auth;
 
@@ -35,7 +35,8 @@ public class login extends AppCompatActivity {
 
         EditTextEmail = (EditText) findViewById(R.id.Email);
         EditTextPassword = (EditText) findViewById(R.id.Password);
-        textView = (TextView) findViewById(R.id.txtRegister);
+        textViewRegister = (TextView) findViewById(R.id.txtRegister);
+        textViewForgotPassword = (TextView) findViewById(R.id.txtForgotPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         auth = FirebaseAuth.getInstance();
 
@@ -45,8 +46,11 @@ public class login extends AppCompatActivity {
         }
 
 
-
-        textView.setOnClickListener(view -> {
+        textViewForgotPassword.setOnClickListener(View -> {
+            Intent intent = new Intent(login.this, resetPassword.class);
+            startActivity(intent);
+        });
+        textViewRegister.setOnClickListener(view -> {
             Intent intent = new Intent(login.this, signUp.class);
             startActivity(intent);
         });
@@ -100,4 +104,7 @@ public class login extends AppCompatActivity {
 
 
     }
+
+
+
 }

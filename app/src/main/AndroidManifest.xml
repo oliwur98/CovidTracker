@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CovidTracker">
         <activity
+            android:name=".resetPassword"
+            android:exported="true" />
+        <activity
             android:name=".FAQ"
             android:exported="true" />
         <activity
