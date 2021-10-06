@@ -45,7 +45,7 @@ public class booking extends AppCompatActivity {
     private Button btn_book;
     private DatePickerDialog.OnDateSetListener Date_listener;
     String UserID;
-    String hej;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
