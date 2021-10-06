@@ -100,7 +100,6 @@ public class dashboard extends AppCompatActivity {
                     case R.id.nav_booking:
                         Intent intent_bookings = new Intent(dashboard.this, booking.class);
                         startActivity(intent_bookings);
-                        String hej;
                         break;
                 }
 
