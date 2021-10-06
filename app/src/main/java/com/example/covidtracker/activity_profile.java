@@ -35,7 +35,6 @@ public class activity_profile extends AppCompatActivity {
     FirebaseFirestore userData;
     String userID;
     Button btn_cancel;
-    String hej;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
