@@ -96,6 +96,11 @@ public class dashboard extends AppCompatActivity {
                     case R.id.nav_covidProof:
                         Intent intent_covidProof = new Intent(dashboard.this, qrcode.class);
                         startActivity(intent_covidProof);
+                        break;
+                    case R.id.nav_booking:
+                        Intent intent_bookings = new Intent(dashboard.this, booking.class);
+                        startActivity(intent_bookings);
+                        break;
                 }
 
 
