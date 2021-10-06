@@ -13,6 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CovidTracker">
         <activity
+            android:name=".Track_and_Manage"
+            android:exported="true" />
+        <activity
+            android:name=".Admin"
+            android:exported="true" />
+        <activity
+            android:name=".qrcode"
+            android:exported="true" />
+        <activity
             android:name=".resetPassword"
             android:exported="true" />
         <activity

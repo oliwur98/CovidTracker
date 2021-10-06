@@ -23,8 +23,8 @@
                     android:id="@+id/nav_profile"
                     android:title="Profile" />
                 <item
-                    android:id="@+id/nav_ree"
-                    android:title="Reee" />
+                    android:id="@+id/nav_covidProof"
+                    android:title="Covid Proof" />
                 <item
                     android:id="@+id/nav_Logout"
                     android:title="Logout" />

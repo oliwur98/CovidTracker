@@ -93,6 +93,9 @@ public class dashboard extends AppCompatActivity {
                         Intent intent_faq = new Intent(dashboard.this, FAQ.class);
                         startActivity(intent_faq);
                         break;
+                    case R.id.nav_covidProof:
+                        Intent intent_covidProof = new Intent(dashboard.this, qrcode.class);
+                        startActivity(intent_covidProof);
                 }
 
 
