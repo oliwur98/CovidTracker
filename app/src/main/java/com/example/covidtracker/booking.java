@@ -2,6 +2,8 @@ package com.example.covidtracker;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -27,9 +29,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+
 
 import java.util.Calendar;
 import java.util.Collection;
@@ -44,7 +49,11 @@ public class booking extends AppCompatActivity {
     private FirebaseFirestore userData;
     private Button btn_book;
     private DatePickerDialog.OnDateSetListener Date_listener;
+    private String numeric_date;
+    private String month_booked;
+    private String day_booked;
     String UserID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +69,13 @@ public class booking extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         SpinnerVaccine.setAdapter(adapter);
 
-        Choose_date = (TextView) findViewById(R.id.choose_date);
 
+
+        Choose_date = (TextView) findViewById(R.id.choose_date);
         Choose_date.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view){
+
                Calendar date = Calendar.getInstance();
                int day = date.get(Calendar.DAY_OF_MONTH);
                int month = date.get(Calendar.MONTH);
@@ -84,6 +95,16 @@ public class booking extends AppCompatActivity {
                 month = month +1;
                 String date_choosen = "Your date: " + month + "/"+  day + "/" + year;
                 Choose_date.setText(date_choosen);
+
+                if(month < 10 && day < 10) numeric_date= year+"0"+month+"0"+ day;
+                else if(month < 10) numeric_date= year+"0"+month+day;
+                else if(day < 10) numeric_date = year+""+month+"0"+day;
+                else numeric_date = ""+year+month+day;
+
+                month_booked = ""+month;
+                day_booked = ""+day;
+
+
             }
         };
 
@@ -126,6 +147,9 @@ public class booking extends AppCompatActivity {
                     Map<String, Object> user = new HashMap<>();
                     user.put("booked_day_time", Choose_date.getText().toString() +" at "+ SpinnerTime.getSelectedItem().toString());
                     user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
+                    user.put("numeric_date", numeric_date);
+                    user.put("month_first_vaccination",month_booked.toString());
+                    user.put("day_first_vaccination",day_booked.toString());
                     documentReference.update(user);
 
                     Intent intent = new Intent(booking.this, dashboard.class);
@@ -165,4 +189,6 @@ public class booking extends AppCompatActivity {
         }
         else return false;
     }
+
+
 }

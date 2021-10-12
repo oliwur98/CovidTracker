@@ -98,6 +98,8 @@ public class signUp extends AppCompatActivity {
                                         user.put("email", EditTextEmail.getText().toString());
                                         user.put("number", EditTextNumber.getText().toString());
                                         user.put("county", SpinnerCounty.getSelectedItem().toString());
+                                        user.put("numeric_date", "0".toString());
+                                        user.put("Doses","0".toString());
 
 
                                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
