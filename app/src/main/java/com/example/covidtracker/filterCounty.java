@@ -6,9 +6,14 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class filterCounty extends AppCompatActivity {
 
     Spinner spiCounty;
+    private FirebaseAuth auth;
+    private FirebaseFirestore userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

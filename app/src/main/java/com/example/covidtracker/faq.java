@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class faq extends AppCompatActivity {
+public class FAQ extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

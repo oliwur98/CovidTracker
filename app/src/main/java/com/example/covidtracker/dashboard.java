@@ -183,21 +183,20 @@ public class dashboard extends AppCompatActivity {
                         break;
                     case R.id.nav_booking:
                         if(ageCheck) {
-                            Intent intent_bookings = new Intent(dashboard.this, booking.class);
-                            startActivity(intent_bookings);
+                            if(which_booking.equals("0")) {
+                                Intent intent_bookings = new Intent(dashboard.this, booking.class);
+                                startActivity(intent_bookings);
+                            }
+                            else if(which_booking.equals("1")){
+                                Intent intent_bookings2 = new Intent(dashboard.this, booking_dose2.class);
+                                startActivity(intent_bookings2);
+                            }
+                            else Toast.makeText(dashboard.this, "You are fully vaccinated", Toast.LENGTH_SHORT).show();
                         }
                         else{
                             Toast.makeText(dashboard.this, "Cant make an appointment, not in the right age group", Toast.LENGTH_SHORT).show();
                         }
-                        if(which_booking.equals("0")) {
-                            Intent intent_bookings = new Intent(dashboard.this, booking.class);
-                            startActivity(intent_bookings);
-                        }
-                        else if(which_booking.equals("1")){
-                            Intent intent_bookings2 = new Intent(dashboard.this, booking_dose2.class);
-                            startActivity(intent_bookings2);
-                        }
-                        else Toast.makeText(dashboard.this, "You are fully vaccinated", Toast.LENGTH_SHORT).show();
+
                         break;
                 }
 
