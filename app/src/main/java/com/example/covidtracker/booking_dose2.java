@@ -27,8 +27,10 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class booking_dose2 extends AppCompatActivity {
@@ -41,7 +43,7 @@ public class booking_dose2 extends AppCompatActivity {
     private Spinner SpinnerTime;
     private Button btn_book;
     private String numeric_date;
-
+    private Spinner spinnerCounty;
 
 
 
@@ -58,6 +60,7 @@ public class booking_dose2 extends AppCompatActivity {
         userData = FirebaseFirestore.getInstance();
         userID = auth.getCurrentUser().getUid();
         btn_book = (Button) findViewById(R.id.button);
+        spinnerCounty = (Spinner) findViewById(R.id.spinner_county);
 
         DocumentReference documentReference = userData.collection("Users").document(userID);
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -65,6 +68,16 @@ public class booking_dose2 extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 month_dose1 = documentSnapshot.getString("month_first_vaccination");
                 day_dose1 = documentSnapshot.getString("day_first_vaccination");
+            }
+        });
+        DocumentReference documentRef = userData.collection("Users").document(userID);
+        documentRef.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                String county = documentSnapshot.getString("county");
+
+                DocumentReference doc = userData.collection("County").document(county);
+                hmm(county);
             }
         });
 
@@ -100,8 +113,8 @@ public class booking_dose2 extends AppCompatActivity {
         Choose_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 int dd1 = Integer.parseInt(day_dose1);
-                 int dm1 = Integer.parseInt(month_dose1);
+                 //int dd1 = Integer.parseInt(day_dose1);
+                 //int dm1 = Integer.parseInt(month_dose1);
 
                 Calendar date = Calendar.getInstance();
 
@@ -137,7 +150,7 @@ public class booking_dose2 extends AppCompatActivity {
     }
     private void already_booked(){
         CollectionReference ref = userData.collection("Users");
-        String day_time = Choose_date.getText().toString() + SpinnerTime.getSelectedItem().toString();
+        String day_time = Choose_date.getText().toString() + SpinnerTime.getSelectedItem().toString() + spinnerCounty.getSelectedItem().toString();;
         Query q=ref.whereEqualTo("booked_day_time", day_time);
 
         q.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -153,7 +166,7 @@ public class booking_dose2 extends AppCompatActivity {
                     userID = auth.getCurrentUser().getUid();
                     DocumentReference documentReference = userData.collection("Users").document(userID);
                     Map<String, Object> user = new HashMap<>();
-                    user.put("booked_day_time", Choose_date.getText().toString() +" at "+ SpinnerTime.getSelectedItem().toString());
+                    user.put("booked_day_time", Choose_date.getText().toString() +" at "+ SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
                     user.put("numeric_date", numeric_date);
                     documentReference.update(user);
 
@@ -186,5 +199,33 @@ public class booking_dose2 extends AppCompatActivity {
             return true;
         }
         else return false;
+    }
+    public void hmm(String county) {
+        DocumentReference docref = userData.collection("County").document(county);
+        docref.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                int hej = 1;
+                int teste = 1;
+                int size = 0;
+                List<String> list = new ArrayList<>();
+                list.add("");
+                while(hej == 1){
+                    assert value != null;
+                    String temp= value.getString(String.valueOf(teste));
+                    if(temp != null){
+                        list.add(String.valueOf(temp));
+                        size++;
+                        teste++;
+                    }
+                    else{
+                        hej = 0;
+                    }
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(booking_dose2.this, android.R.layout.simple_spinner_dropdown_item, list);
+                spinnerCounty.setAdapter(adapter);
+            }
+        });
+
     }
 }
