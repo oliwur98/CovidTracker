@@ -6,8 +6,8 @@
             android:id="@+id/nav_home"
             android:title="Home" />
         <item
-            android:id="@+id/nav_ho"
-            android:title="Home" />
+            android:id="@+id/nav_booking"
+            android:title="Book appointment" />
         <item
             android:id="@+id/nav_me"
             android:title="Home" />

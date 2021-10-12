@@ -60,12 +60,12 @@ public class signUp extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         userData = FirebaseFirestore.getInstance();
 
-        Spinner dropdown = findViewById(R.id.county_signup);
+       //Spinner dropdown = findViewById(R.id.county_signup);
 
         String[] items = new String[]{"County", "Blekinge", "Dalarna", "Gotland", "Gävleborg", "Halland", "Jämtland Härjedalen", "Jönköpings län", "Kalmar län", "Kronoberg", "Norrbotten", "Skåne", "Stockholms län", "Sörmland", "Uppsala län", "Värmland", "Västerbotten", "VästerNorrland", "Västmanland", "Västra Götaland", "Örebro län", "Östergötland"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
 
-        dropdown.setAdapter(adapter);
+        SpinnerCounty.setAdapter(adapter);
 
 
         BtnSignUp.setOnClickListener(new View.OnClickListener() {
