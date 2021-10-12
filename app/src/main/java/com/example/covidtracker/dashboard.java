@@ -41,6 +41,11 @@ public class dashboard extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore userData;
     String userID;
+    String SSN;
+    String SSN_test;
+    String ageGroup;
+    Boolean ageCheck;
+
     String which_booking;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,10 +127,37 @@ public class dashboard extends AppCompatActivity {
                 String mail = documentSnapshot.getString("email");
                 String space = " ";
                 String fullName = fName + space + lName;
+
+                SSN_test = documentSnapshot.getString("SSN");
+                System.out.println("-dw-dwa-adw-adwa-wddw-dwa-wadw-dawad-wda-wdawad-w-wdaw-adwd-a");
+                SSN = SSN_test.substring(0, SSN_test.length() - 4);
+
                 name.setText(fullName);
                 email.setText(mail);
+
+
             }
         });
+
+        DocumentReference documentReference3 = userData.collection("Admin").document("admin");
+        documentReference3.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                ageGroup = documentSnapshot.getString("agegroup");
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+                String sdfDate = sdf.format(date);
+
+                if(Integer.parseInt(sdfDate) - Integer.parseInt(SSN) < Integer.parseInt(ageGroup)*10000){
+                    ageCheck = false;
+                }
+                else{
+                    ageCheck = true;
+                }
+            }
+        });
+
+
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -142,7 +174,7 @@ public class dashboard extends AppCompatActivity {
                         startActivity(intent_profile);
                         break;
                     case R.id.nav_faq:
-                        Intent intent_faq = new Intent(dashboard.this, faq.class);
+                        Intent intent_faq = new Intent(dashboard.this, FAQ.class);
                         startActivity(intent_faq);
                         break;
                     case R.id.nav_covidProof:
@@ -150,6 +182,13 @@ public class dashboard extends AppCompatActivity {
                         startActivity(intent_covidProof);
                         break;
                     case R.id.nav_booking:
+                        if(ageCheck) {
+                            Intent intent_bookings = new Intent(dashboard.this, booking.class);
+                            startActivity(intent_bookings);
+                        }
+                        else{
+                            Toast.makeText(dashboard.this, "Cant make an appointment, not in the right age group", Toast.LENGTH_SHORT).show();
+                        }
                         if(which_booking.equals("0")) {
                             Intent intent_bookings = new Intent(dashboard.this, booking.class);
                             startActivity(intent_bookings);

@@ -71,7 +71,6 @@ public class Track_and_Manage extends AppCompatActivity {
                 for(DocumentChange dc : value.getDocumentChanges()){
 
                     if(dc.getType() == DocumentChange.Type.ADDED){
-                        //Ska vara user inte users????!?!?!?
                         userArrayList.add(dc.getDocument().toObject(Users.class));
                     }
 

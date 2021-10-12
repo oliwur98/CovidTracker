@@ -1,5 +1,6 @@
 package com.example.covidtracker;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -8,8 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -17,7 +18,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,8 +25,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
-
-import java.lang.Object;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class qrcode extends AppCompatActivity {
     //variables
@@ -35,6 +35,8 @@ public class qrcode extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore userData;
     String userID;
+    String vaccineDoseTwoDate;
+    public String qrCodeString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,30 +47,53 @@ public class qrcode extends AppCompatActivity {
         btGenerate = findViewById(R.id.bt_generate);
         auth = FirebaseAuth.getInstance();
         userData = FirebaseFirestore.getInstance();
-        //the value the QR code will output
+
         userID = auth.getCurrentUser().getUid();
+
+        DocumentReference documentReference = userData.collection("Users").document(userID);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                String qrCodeStringtest = documentSnapshot.getString("Doses");
+                String doseTwotest = documentSnapshot.getString("dose2_date");
+                qrCodeString = qrCodeStringtest;
+                vaccineDoseTwoDate = doseTwotest;
+            }
+        });
+
 
         btGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //Multi format writer
-                MultiFormatWriter writer = new MultiFormatWriter();
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+                String sdfDate = sdf.format(date);
 
-                try {
-                    //Initialize bit matrix
-                    BitMatrix matrix = writer.encode("Vaccinated, 2 doses", BarcodeFormat.QR_CODE
-                            , 350, 350);
-                    //Initialize barcode encoder
-                    BarcodeEncoder encoder = new BarcodeEncoder();
-                    //Initialize bitmap
-                    Bitmap bitmap = encoder.createBitmap(matrix);
-                    //set bitmap on image view
-                    ivOutput.setImageBitmap(bitmap);
-                    //initialize input manager
-                    InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                } catch (WriterException e) {
-                    e.printStackTrace();
+                System.out.println("djwiajdiwajdwaijdwaidjaw" + " " + qrCodeString);
+                if(qrCodeString.equals("2") && (Integer.parseInt(vaccineDoseTwoDate) - Integer.parseInt(sdfDate)) <= -14) {
+                    //Multi format writer
+                    MultiFormatWriter writer = new MultiFormatWriter();
+
+                    try {
+
+                        //Initialize bit matrix
+                        BitMatrix matrix = writer.encode("Total doses: " + qrCodeString, BarcodeFormat.QR_CODE
+                                , 350, 350);
+                        //Initialize barcode encoder
+                        BarcodeEncoder encoder = new BarcodeEncoder();
+                        //Initialize bitmap
+                        Bitmap bitmap = encoder.createBitmap(matrix);
+                        //set bitmap on image view
+                        ivOutput.setImageBitmap(bitmap);
+                        //initialize input manager
+                        InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    } catch (WriterException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    Toast.makeText(qrcode.this,"Cant generate passport, you do not have 2 doses", Toast.LENGTH_SHORT).show();
                 }
             }
         });

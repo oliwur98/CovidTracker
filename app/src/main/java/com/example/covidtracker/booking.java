@@ -2,6 +2,7 @@ package com.example.covidtracker;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -64,6 +66,7 @@ public class booking extends AppCompatActivity {
         userData = FirebaseFirestore.getInstance();
         btn_book = (Button) findViewById(R.id.button);
 
+
         SpinnerVaccine = (Spinner) findViewById(R.id.spinner_vaccine);
         String[] items = new String[]{" ", "Pfizer", "Moderna"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -72,6 +75,8 @@ public class booking extends AppCompatActivity {
 
 
         Choose_date = (TextView) findViewById(R.id.choose_date);
+
+
         Choose_date.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view){
