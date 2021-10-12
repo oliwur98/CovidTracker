@@ -3,8 +3,6 @@ package com.example.covidtracker;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -26,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -38,22 +35,23 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class booking extends AppCompatActivity {
     private Spinner SpinnerVaccine;
     private Spinner SpinnerTime;
+    private Spinner spinnerCounty;
     private TextView Choose_date;
     private FirebaseAuth auth;
     private FirebaseFirestore userData;
     private Button btn_book;
     private DatePickerDialog.OnDateSetListener Date_listener;
     private String numeric_date;
-    private String month_booked;
-    private String day_booked;
     String UserID;
 
 
@@ -66,32 +64,44 @@ public class booking extends AppCompatActivity {
         userData = FirebaseFirestore.getInstance();
         btn_book = (Button) findViewById(R.id.button);
 
-
         SpinnerVaccine = (Spinner) findViewById(R.id.spinner_vaccine);
         String[] items = new String[]{" ", "Pfizer", "Moderna"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         SpinnerVaccine.setAdapter(adapter);
+        spinnerCounty = (Spinner) findViewById(R.id.spinner_county);
+
+        userData = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        UserID = auth.getCurrentUser().getUid();
+        DocumentReference documentRef = userData.collection("Users").document(UserID);
+        documentRef.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                String county = documentSnapshot.getString("county");
+
+                DocumentReference doc = userData.collection("County").document(county);
+                hmm(county);
+            }
+        });
 
 
 
         Choose_date = (TextView) findViewById(R.id.choose_date);
-
-
         Choose_date.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view){
+            @Override
+            public void onClick(View view){
 
-               Calendar date = Calendar.getInstance();
-               int day = date.get(Calendar.DAY_OF_MONTH);
-               int month = date.get(Calendar.MONTH);
-               int year = date.get(Calendar.YEAR);
+                Calendar date = Calendar.getInstance();
+                int day = date.get(Calendar.DAY_OF_MONTH);
+                int month = date.get(Calendar.MONTH);
+                int year = date.get(Calendar.YEAR);
 
-               DatePickerDialog date_dialog = new DatePickerDialog(booking.this,
-                       android.R.style.Theme_Holo_Dialog_MinWidth,Date_listener, year,month,day);
-               date_dialog.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
-               date_dialog.getWindow().setBackgroundDrawable((new ColorDrawable(Color.TRANSPARENT)));
-               date_dialog.show();
-           }
+                DatePickerDialog date_dialog = new DatePickerDialog(booking.this,
+                        android.R.style.Theme_Holo_Dialog_MinWidth,Date_listener, year,month,day);
+                date_dialog.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+                date_dialog.getWindow().setBackgroundDrawable((new ColorDrawable(Color.TRANSPARENT)));
+                date_dialog.show();
+            }
         });
 
         Date_listener = new DatePickerDialog.OnDateSetListener() {
@@ -100,16 +110,10 @@ public class booking extends AppCompatActivity {
                 month = month +1;
                 String date_choosen = "Your date: " + month + "/"+  day + "/" + year;
                 Choose_date.setText(date_choosen);
-
                 if(month < 10 && day < 10) numeric_date= year+"0"+month+"0"+ day;
                 else if(month < 10) numeric_date= year+"0"+month+day;
                 else if(day < 10) numeric_date = year+""+month+"0"+day;
                 else numeric_date = ""+year+month+day;
-
-                month_booked = ""+month;
-                day_booked = ""+day;
-
-
             }
         };
 
@@ -134,7 +138,7 @@ public class booking extends AppCompatActivity {
 
     private void already_booked(){
         CollectionReference ref = userData.collection("Users");
-        String day_time = Choose_date.getText().toString() + SpinnerTime.getSelectedItem().toString();
+        String day_time = Choose_date.getText().toString() + SpinnerTime.getSelectedItem().toString() + spinnerCounty.getSelectedItem().toString();
         Query q=ref.whereEqualTo("booked_day_time", day_time);
 
         q.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -147,14 +151,12 @@ public class booking extends AppCompatActivity {
                     if(already_booked.equals(day_time)) isExisting = true;
                 }
                 if(!isExisting) {
-                    UserID = auth.getCurrentUser().getUid();
+
                     DocumentReference documentReference = userData.collection("Users").document(UserID);
                     Map<String, Object> user = new HashMap<>();
-                    user.put("booked_day_time", Choose_date.getText().toString() +" at "+ SpinnerTime.getSelectedItem().toString());
+                    user.put("booked_day_time", Choose_date.getText().toString() +" at "+ SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString() );
                     user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
                     user.put("numeric_date", numeric_date);
-                    user.put("month_first_vaccination",month_booked.toString());
-                    user.put("day_first_vaccination",day_booked.toString());
                     documentReference.update(user);
 
                     Intent intent = new Intent(booking.this, dashboard.class);
@@ -195,5 +197,35 @@ public class booking extends AppCompatActivity {
         else return false;
     }
 
+   public void hmm(String county) {
+        DocumentReference docref = userData.collection("County").document(county);
+        docref.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                int hej = 1;
+                int teste = 1;
+                int size = 0;
+                List<String> list = new ArrayList<>();
+                list.add("");
+                while(hej == 1){
+                    assert value != null;
+                    String temp= value.getString(String.valueOf(teste));
+                    if(temp != null){
+                        list.add(String.valueOf(temp));
+                        size++;
+                        teste++;
+                    }
+                    else{
+                        hej = 0;
+                    }
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(booking.this, android.R.layout.simple_spinner_dropdown_item, list);
+                spinnerCounty.setAdapter(adapter);
+
+
+            }
+        });
+
+    }
 
 }
