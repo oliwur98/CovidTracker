@@ -154,7 +154,7 @@ public class booking extends AppCompatActivity {
 
                     DocumentReference documentReference = userData.collection("Users").document(UserID);
                     Map<String, Object> user = new HashMap<>();
-                    user.put("booked_day_time", Choose_date.getText().toString() +" at "+ SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString() );
+                    user.put("booked_day_time", Choose_date.getText().toString() +" at "+ SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
                     user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
                     user.put("numeric_date", numeric_date);
                     documentReference.update(user);
