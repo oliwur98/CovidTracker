@@ -35,7 +35,7 @@
             android:name=".resetPassword"
             android:exported="true" />
         <activity
-            android:name=".faq"
+            android:name=".FAQ"
             android:exported="true" />
         <activity
             android:name=".dashboard"

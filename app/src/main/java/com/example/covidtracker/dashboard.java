@@ -174,7 +174,7 @@ public class dashboard extends AppCompatActivity {
                         startActivity(intent_profile);
                         break;
                     case R.id.nav_faq:
-                        Intent intent_faq = new Intent(dashboard.this, faq.class);
+                        Intent intent_faq = new Intent(dashboard.this, FAQ.class);
                         startActivity(intent_faq);
                         break;
                     case R.id.nav_covidProof:
