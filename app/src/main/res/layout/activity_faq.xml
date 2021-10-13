@@ -4,6 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FAQ">
+    tools:context=".faq">
+
+    <ExpandableListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/eTV"
+        android:padding="5dp">
+    </ExpandableListView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

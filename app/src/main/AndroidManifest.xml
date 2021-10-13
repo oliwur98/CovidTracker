@@ -16,14 +16,9 @@
             android:name=".filterCounty"
             android:exported="true" />
         <activity
-            android:name=".test"
-            android:exported="true" />
-        <activity
             android:name=".booking_dose2"
             android:exported="true" />
-        <activity
-            android:name=".test"
-            android:exported="true" />
+
         <activity
             android:name=".Track_and_Manage"
             android:exported="true" />
@@ -40,7 +35,7 @@
             android:name=".resetPassword"
             android:exported="true" />
         <activity
-            android:name=".FAQ"
+            android:name=".faq"
             android:exported="true" />
         <activity
             android:name=".dashboard"
@@ -59,13 +54,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:exported="true" />
-        <activity
             android:name=".booking"
-            android:exported="true" />
-        <activity
-            android:name=".activity_profile"
             android:exported="true" />
     </application>
 

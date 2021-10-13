@@ -99,16 +99,16 @@ public class login extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    Toast.makeText(login.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+
                                     // If sign in fails, display a message to the user. If sign in succeeds
                                     // the auth state listener will be notified and logic to handle the
                                     // signed in user can be handled in the listener.
 
                                     //If sign in successful, sign in to the admin page.
                                     if (!task.isSuccessful()) {
-                                        Toast.makeText(login.this, "SignUp failed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(login.this, "Login failed", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(login.this, "SignUp successful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(login.this, "Login successful", Toast.LENGTH_SHORT).show();
                                         Intent intent_admin = new Intent(login.this, Admin.class);
                                         startActivity(intent_admin);
                                     }
@@ -120,14 +120,13 @@ public class login extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    Toast.makeText(login.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                                     // If sign in fails, display a message to the user. If sign in succeeds
                                     // the auth state listener will be notified and logic to handle the
                                     // signed in user can be handled in the listener.
                                     if (!task.isSuccessful()) {
-                                        Toast.makeText(login.this, "SignUp failed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(login.this, "Login failed", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(login.this, "SignUp successful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(login.this, "Login successful", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(login.this, dashboard.class);
                                         startActivity(intent);
                                     }
