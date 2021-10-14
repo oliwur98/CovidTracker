@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fagsTitleView"
+        android:paddingLeft="?android:expandableListPreferredChildPaddingLeft"
+        android:paddingStart="?android:expandableListPreferredChildPaddingLeft"
+        android:minHeight="40dp"
+        android:text="Title Example"
+        android:textColor="@color/white"
+        android:background="@color/design_default_color_primary_dark"
+        android:textSize="18dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        />
+</LinearLayout>

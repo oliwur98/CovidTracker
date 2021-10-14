@@ -13,7 +13,7 @@ public class faq extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faq);
         expandableTextView=findViewById(R.id.eTV);
-        ExpandableTextViewAdapter adapter=new ExpandableTextViewAdapter(faq.this);
+        ExpandableTextViewAdapter adapter = new ExpandableTextViewAdapter(faq.this);
         expandableTextView.setAdapter(adapter);
     }
 }
