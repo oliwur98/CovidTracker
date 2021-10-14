@@ -52,6 +52,8 @@ public class booking extends AppCompatActivity {
     private Button btn_book;
     private DatePickerDialog.OnDateSetListener Date_listener;
     private String numeric_date;
+    private String month_booked;
+    private String day_booked;
     String UserID;
 
 
@@ -114,6 +116,9 @@ public class booking extends AppCompatActivity {
                 else if(month < 10) numeric_date= year+"0"+month+day;
                 else if(day < 10) numeric_date = year+""+month+"0"+day;
                 else numeric_date = ""+year+month+day;
+
+                month_booked = ""+month;
+                day_booked = ""+day;
             }
         };
 
@@ -157,6 +162,8 @@ public class booking extends AppCompatActivity {
                     user.put("booked_day_time", Choose_date.getText().toString() +" at "+ SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
                     user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
                     user.put("numeric_date", numeric_date);
+                    user.put("month_first_vaccination", month_booked);
+                    user.put("day_first_vaccination", day_booked);
                     documentReference.update(user);
 
                     Intent intent = new Intent(booking.this, dashboard.class);

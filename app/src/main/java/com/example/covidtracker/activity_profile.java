@@ -72,6 +72,7 @@ public class activity_profile extends AppCompatActivity {
                 user.put("booked_day_time", FieldValue.delete());
                 user.put("Vaccine", FieldValue.delete());
                 user.put("numeric_date", FieldValue.delete());
+                btn_cancel.setVisibility(View.INVISIBLE);
                 documentReference.update(user);
             }
         });
