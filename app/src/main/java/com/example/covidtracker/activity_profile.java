@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
 public class activity_profile extends AppCompatActivity {
 
     TextView name, county, booked;
-    EditText number, confirmNumber, email;
+    TextView number,  email;
     FirebaseAuth auth;
     FirebaseFirestore userData;
     String userID;
@@ -42,9 +42,8 @@ public class activity_profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         name = findViewById(R.id.name_profile);
-        number = (EditText) findViewById(R.id.number_profile);
-        confirmNumber = (EditText) findViewById(R.id.confirmnumber_profile);
-        email = (EditText) findViewById(R.id.mail_profile);
+        number = (TextView) findViewById(R.id.number_profile);
+        email = (TextView) findViewById(R.id.mail_profile);
         auth = FirebaseAuth.getInstance();
         userData = FirebaseFirestore.getInstance();
         userID = auth.getCurrentUser().getUid();
@@ -53,6 +52,18 @@ public class activity_profile extends AppCompatActivity {
         btn_cancel = findViewById(R.id.cancel_appointment);
 
 
+        DocumentReference documentReference = userData.collection("Users").document(userID);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                String show = value.getString("booked_day_time");
+                if(show != null) {
+                btn_cancel.setVisibility(View.VISIBLE);
+                }
+                else;
+
+            }
+        });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,7 +77,7 @@ public class activity_profile extends AppCompatActivity {
         });
 
 
-        DocumentReference documentReference = userData.collection("Users").document(userID);
+        DocumentReference documentReference2 = userData.collection("Users").document(userID);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nonnull DocumentSnapshot documentSnapshot, @Nonnull FirebaseFirestoreException error) {
@@ -82,9 +93,8 @@ public class activity_profile extends AppCompatActivity {
 
                 booked.setText(booked_time);
                 name.setText(fullName);
-                number.setHint(Pnumber);
-                confirmNumber.setHint(Pnumber);
-                email.setHint(mail);
+                number.setText(Pnumber);
+                email.setText(mail);
                 county.setText(adress);
             }
         });

@@ -80,7 +80,7 @@ public class dashboard extends AppCompatActivity {
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
                 String sdfDate = sdf.format(date);
-                if (Integer.parseInt(vaccine_dose_date) != 0) {
+                if (vaccine_dose_date != null) {
                     if (Integer.parseInt(vaccine_dose_date) - Integer.parseInt(sdfDate) <= 0) {
                         DocumentReference documents = userData.collection("Users").document(userID);
                         String doses = documentSnapshot.getString("Doses");

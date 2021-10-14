@@ -32,12 +32,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_profile" />
 
-    <EditText
+    <TextView
         android:id="@+id/number_profile"
         android:layout_width="148dp"
         android:layout_height="38dp"
         android:ems="10"
-        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.205"
@@ -45,12 +44,11 @@
         app:layout_constraintTop_toBottomOf="@+id/Adress_profile"
         app:layout_constraintVertical_bias="0.091" />
 
-    <EditText
-        android:id="@+id/confirmnumber_profile"
+    <TextView
+        android:id="@+id/mail_profile"
         android:layout_width="148dp"
         android:layout_height="38dp"
         android:ems="10"
-        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.205"
@@ -58,23 +56,10 @@
         app:layout_constraintTop_toBottomOf="@+id/number_profile"
         app:layout_constraintVertical_bias="0.082" />
 
-    <EditText
-        android:id="@+id/mail_profile"
-        android:layout_width="148dp"
-        android:layout_height="44dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.205"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmnumber_profile"
-        app:layout_constraintVertical_bias="0.083" />
-
     <TextView
         android:id="@+id/bookings"
         android:layout_width="140dp"
-        android:layout_height="76dp"
+        android:layout_height="105dp"
         android:layout_marginTop="168dp"
 
         android:text="TextView"
@@ -89,11 +74,12 @@
         android:layout_height="57dp"
         android:layout_marginTop="44dp"
         android:text="Cancel booked\nappointment"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.935"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bookings"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.094" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
