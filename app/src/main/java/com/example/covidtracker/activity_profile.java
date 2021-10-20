@@ -71,7 +71,7 @@ public class activity_profile extends AppCompatActivity {
                 Map<String, Object> user = new HashMap<>();
                 user.put("booked_day_time", FieldValue.delete());
                 user.put("Vaccine", FieldValue.delete());
-                user.put("numeric_date", FieldValue.delete());
+                user.put("numeric_date", "0".toString());
                 btn_cancel.setVisibility(View.INVISIBLE);
                 documentReference.update(user);
             }

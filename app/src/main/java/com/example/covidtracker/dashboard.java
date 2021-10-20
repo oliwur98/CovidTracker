@@ -1,6 +1,8 @@
 package com.example.covidtracker;
 
 
+import static java.lang.String.valueOf;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,18 +15,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,6 +53,13 @@ public class dashboard extends AppCompatActivity {
     String SSN_test;
     String ageGroup;
     Boolean ageCheck;
+
+    Spinner spinnerCounty;
+    Spinner spinnerAge;
+    Spinner spinnerVaccineType;
+    TextView txtDose1;
+    TextView txtDose2;
+    Button btnUpdate;
 
     String which_booking;
     @Override
@@ -71,11 +87,47 @@ public class dashboard extends AppCompatActivity {
         userData = FirebaseFirestore.getInstance();
         userID = auth.getCurrentUser().getUid();
 
+        spinnerCounty = findViewById(R.id.spinner_dashboard_county);
+        spinnerAge = findViewById(R.id.spinner_age);
+        spinnerVaccineType = findViewById(R.id.spinner_vaccine_type);
+        txtDose1= (TextView) findViewById(R.id.txt_dose1);
+        txtDose2 = (TextView) findViewById(R.id.txt_dose2);
+        btnUpdate = findViewById(R.id.btnUpdate);
+
+
+
+        String[] county = new String[]{"County", "Blekinge", "Dalarna", "Gotland", "Gävleborg", "Halland", "Jämtland", "Jönköping", "kalmar", "Kronoberg", "Norrbotten", "Skåne", "Stockholm", "Södermanland", "Uppsala", "Värmland", "Västerbotten", "Västernorrland", "Västmanland", "Västra Götaland", "Örebro", "Östergötland"};
+        ArrayAdapter<String> countyAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, county);
+        spinnerCounty.setAdapter(countyAdapter);
+
+
+        String[] age = new String[]{"Age Group", "0-10", "11-20", "21-30", "31-40", "41-50", "51-60", "60+"};
+        ArrayAdapter<String> ageAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, age);
+        spinnerAge.setAdapter(ageAdapter);
+
+
+        String[] type = new String[]{"vaccine", "Moderna", "Pfizer"};
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, type);
+        spinnerVaccineType.setAdapter(typeAdapter);
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            updateNumbers();
+            }
+        });
+
+
+
+
+
+
         DocumentReference document = userData.collection("Users").document(userID);
         document.addSnapshotListener(this, new EventListener<DocumentSnapshot>(){
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 String vaccine_dose_date = documentSnapshot.getString("numeric_date");
+
 
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -220,5 +272,177 @@ public class dashboard extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+    void updateNumbers(){
+        CollectionReference ref = userData.collection("Users");
+        String county = spinnerCounty.getSelectedItem().toString();
+        String vaccineType = spinnerVaccineType.getSelectedItem().toString();
+        String age =spinnerAge.getSelectedItem().toString();
 
+        //only vaccine type
+        if(county.equals("County") && age.equals("Age Group")){
+            Query Qtype=ref.whereEqualTo("Vaccine", vaccineType);
+            Qtype.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    boolean isExisting = false;
+                    int doseOne = 0;
+                    int doseTwo = 0;
+                    for(DocumentSnapshot document : queryDocumentSnapshots){
+                        String sameType;
+                        sameType = document.getString("Vaccine");
+                        if(sameType.equals(vaccineType)) {
+                            isExisting = true;
+                            String doses = document.getString("Doses");
+                            if(doses.equals("0")){
+                                doseOne++;
+                            }
+                            if(doses.equals("1")){
+                                doseTwo++;
+                            }
+
+                        }
+                    }
+                    txtDose1.setText(valueOf(doseOne));
+                    txtDose2.setText(valueOf(doseTwo));
+
+
+
+                }
+            });
+        }
+        //only county
+        else if(vaccineType.equals("vaccine") && age.equals("Age Group")){
+            Query Qcounty=ref.whereEqualTo("county", county);
+            Qcounty.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    boolean isExisting = false;
+                    int doseOne = 0;
+                    int doseTwo = 0;
+                    for(DocumentSnapshot document : queryDocumentSnapshots){
+                        String sameCounty;
+                        sameCounty = document.getString("county");
+                        if(sameCounty.equals(county)) {
+                            isExisting = true;
+                            String doses = document.getString("Doses");
+                            if(doses.equals("0")){
+                                doseOne++;
+                            }
+                            if(doses.equals("1")){
+                                doseTwo++;
+                            }
+
+                        }
+                    }
+                    txtDose1.setText(valueOf(doseOne));
+                    txtDose2.setText(valueOf(doseTwo));
+
+
+
+                }
+            });
+
+        }
+        //only age group
+        else if(county.equals("County") && vaccineType.equals("vaccine") ){
+           String lowAge;
+           String highAge;
+            if(!age.equals("60+")) {
+                String[] ageSplit = age.split("-", -2);
+                 lowAge = ageSplit[0];
+                highAge = ageSplit[1];
+            }
+            else{
+                lowAge = "60";
+                highAge = "150";
+
+
+            }
+            int intLow = Integer.parseInt(lowAge);
+            int intHigh = Integer.parseInt(highAge);
+            txtDose1.setText(valueOf(highAge));
+            txtDose2.setText(valueOf(lowAge));
+          /*  Query Qage=ref.whereGreaterThanOrEqualTo("age",intLow).whereLessThanOrEqualTo("age", intHigh);
+            Qage.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    boolean isExisting = false;
+                    int doseOne = 0;
+                    int doseTwo = 0;
+                    for (DocumentSnapshot document : queryDocumentSnapshots) {
+                        String sameAge;
+                        sameAge = document.getString("age");
+                        int intAge = Integer.parseInt(sameAge);
+
+                        if (intLow <= intAge && intAge <= intHigh) {
+                            isExisting = true;
+                            String doses = document.getString("Doses");
+                            if (doses.equals("0")) {
+                                doseOne++;
+                            }
+                            if (doses.equals("1")) {
+                                doseTwo++;
+                            }
+                        }
+
+
+                        txtDose1.setText(valueOf(highAge));
+                        txtDose2.setText(valueOf(lowAge));
+
+
+                    }
+                }
+            });*/
+        }
+        //vaccine type and county
+        else if(age.equals("Age Group")){
+            Query QtypeCounty=ref.whereEqualTo("county", county).whereEqualTo("Vaccine", vaccineType);
+            QtypeCounty.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    boolean isExisting = false;
+                    int doseOne = 0;
+                    int doseTwo = 0;
+                    for(DocumentSnapshot document : queryDocumentSnapshots){
+                        String sameType;
+                        sameType = document.getString("Vaccine");
+                        String sameCounty;
+                        sameCounty = document.getString("county");
+                        if(sameType.equals(vaccineType) && sameCounty.equals(county)) {
+                            isExisting = true;
+                            String doses = document.getString("Doses");
+                            if(doses.equals("0")){
+                                doseOne++;
+                            }
+                            if(doses.equals("1")){
+                                doseTwo++;
+                            }
+
+                        }
+                    }
+                    txtDose1.setText(valueOf(doseOne));
+                    txtDose2.setText(valueOf(doseTwo));
+
+
+
+                }
+            });
+        }
+        //vaccine type and age group
+        else if(county.equals("County")){
+
+        }
+        //county and age group
+        else if(county.equals("County")){
+
+        }
+        //all
+        else {
+        }
+
+
+    }
 }

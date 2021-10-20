@@ -62,7 +62,7 @@ public class signUp extends AppCompatActivity {
 
        //Spinner dropdown = findViewById(R.id.county_signup);
 
-        String[] items = new String[]{"County", "Blekinge", "Dalarna", "Gotland", "Gävleborg", "Halland", "Jämtland Härjedalen", "Jönköpings län", "Kalmar län", "Kronoberg", "Norrbotten", "Skåne", "Stockholms län", "Sörmland", "Uppsala län", "Värmland", "Västerbotten", "VästerNorrland", "Västmanland", "Västra Götaland", "Örebro län", "Östergötland"};
+        String[] items = new String[]{"County", "Blekinge", "Dalarna", "Gotland", "Gävleborg", "Halland", "Jämtland", "Jönköping", "Kalmar", "Kronoberg", "Norrbotten", "Skåne", "Stockholm", "Sörmland", "Uppsala", "Värmland", "Västerbotten", "VästerNorrland", "Västmanland", "Västra Götaland", "Örebro", "Östergötland"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
 
         SpinnerCounty.setAdapter(adapter);
