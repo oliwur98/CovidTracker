@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +37,9 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -277,31 +280,58 @@ public class dashboard extends AppCompatActivity {
         String county = spinnerCounty.getSelectedItem().toString();
         String vaccineType = spinnerVaccineType.getSelectedItem().toString();
         String age =spinnerAge.getSelectedItem().toString();
+        //none
+       if(county.equals("County") && age.equals("Age Group") && vaccineType.equals("vaccine")){
+           String qq = "1";
+        String ww = "2";
+           Query Qnone=ref.orderBy("Doses").startAt(0);
+           Qnone.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+               @Override
 
+               public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                   int doseOne = 0;
+                   int doseTwo = 0;
+                   for(DocumentSnapshot document : queryDocumentSnapshots){
+
+                       String doses = document.getString("Doses");
+                       if(doses.equals("1")){
+                           doseOne++;
+                       }
+                       if(doses.equals("2")){
+                           doseTwo++;
+                       }
+
+                   }
+                   txtDose1.setText(valueOf(doseOne));
+                   txtDose2.setText(valueOf(doseTwo));
+
+
+
+               }
+           });
+
+       }
         //only vaccine type
-        if(county.equals("County") && age.equals("Age Group")){
+       else if(county.equals("County") && age.equals("Age Group")){
             Query Qtype=ref.whereEqualTo("Vaccine", vaccineType);
             Qtype.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
 
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    boolean isExisting = false;
+
                     int doseOne = 0;
                     int doseTwo = 0;
                     for(DocumentSnapshot document : queryDocumentSnapshots){
-                        String sameType;
-                        sameType = document.getString("Vaccine");
-                        if(sameType.equals(vaccineType)) {
-                            isExisting = true;
+
                             String doses = document.getString("Doses");
-                            if(doses.equals("0")){
+                            if(doses.equals("1")){
                                 doseOne++;
                             }
-                            if(doses.equals("1")){
+                            if(doses.equals("2")){
                                 doseTwo++;
                             }
 
-                        }
                     }
                     txtDose1.setText(valueOf(doseOne));
                     txtDose2.setText(valueOf(doseTwo));
@@ -318,24 +348,20 @@ public class dashboard extends AppCompatActivity {
                 @Override
 
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    boolean isExisting = false;
                     int doseOne = 0;
                     int doseTwo = 0;
                     for(DocumentSnapshot document : queryDocumentSnapshots){
-                        String sameCounty;
-                        sameCounty = document.getString("county");
-                        if(sameCounty.equals(county)) {
-                            isExisting = true;
+
                             String doses = document.getString("Doses");
-                            if(doses.equals("0")){
+                            if(doses.equals("1")){
                                 doseOne++;
                             }
-                            if(doses.equals("1")){
+                            if(doses.equals("2")){
                                 doseTwo++;
                             }
 
                         }
-                    }
+
                     txtDose1.setText(valueOf(doseOne));
                     txtDose2.setText(valueOf(doseTwo));
 
@@ -349,6 +375,9 @@ public class dashboard extends AppCompatActivity {
         else if(county.equals("County") && vaccineType.equals("vaccine") ){
            String lowAge;
            String highAge;
+            Date date = new Date();
+            Calendar cal = new GregorianCalendar();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             if(!age.equals("60+")) {
                 String[] ageSplit = age.split("-", -2);
                  lowAge = ageSplit[0];
@@ -357,44 +386,47 @@ public class dashboard extends AppCompatActivity {
             else{
                 lowAge = "60";
                 highAge = "150";
-
-
             }
             int intLow = Integer.parseInt(lowAge);
             int intHigh = Integer.parseInt(highAge);
-            txtDose1.setText(valueOf(highAge));
-            txtDose2.setText(valueOf(lowAge));
-          /*  Query Qage=ref.whereGreaterThanOrEqualTo("age",intLow).whereLessThanOrEqualTo("age", intHigh);
+            cal.add(Calendar.YEAR, -intLow);
+            Date low = cal.getTime();
+            cal.add(Calendar.YEAR, -intHigh);
+            Date high = cal.getTime();
+            String eeee = "0000";
+
+            String sdflow = sdf.format(low) + eeee;
+            String rrrr = "9999";
+            String sdfhigh = sdf.format(high) + rrrr;
+            String fuck = sdflow + eeee;
+            String fuck2 = sdfhigh + rrrr;
+
+           Query Qage=ref.orderBy("SSN").startAt(fuck2).endAt(fuck);
             Qage.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    boolean isExisting = false;
                     int doseOne = 0;
                     int doseTwo = 0;
                     for (DocumentSnapshot document : queryDocumentSnapshots) {
-                        String sameAge;
-                        sameAge = document.getString("age");
-                        int intAge = Integer.parseInt(sameAge);
 
-                        if (intLow <= intAge && intAge <= intHigh) {
-                            isExisting = true;
                             String doses = document.getString("Doses");
-                            if (doses.equals("0")) {
+                            if (doses.equals("1")) {
                                 doseOne++;
                             }
-                            if (doses.equals("1")) {
+                            if (doses.equals("2")) {
                                 doseTwo++;
                             }
                         }
 
 
-                        txtDose1.setText(valueOf(highAge));
-                        txtDose2.setText(valueOf(lowAge));
+                       txtDose1.setText(valueOf(doseOne));
+                        txtDose2.setText(valueOf(doseTwo));
 
 
-                    }
+
                 }
-            });*/
+
+            });
         }
         //vaccine type and county
         else if(age.equals("Age Group")){
@@ -403,26 +435,19 @@ public class dashboard extends AppCompatActivity {
                 @Override
 
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    boolean isExisting = false;
+
                     int doseOne = 0;
                     int doseTwo = 0;
                     for(DocumentSnapshot document : queryDocumentSnapshots){
-                        String sameType;
-                        sameType = document.getString("Vaccine");
-                        String sameCounty;
-                        sameCounty = document.getString("county");
-                        if(sameType.equals(vaccineType) && sameCounty.equals(county)) {
-                            isExisting = true;
                             String doses = document.getString("Doses");
-                            if(doses.equals("0")){
+                            if(doses.equals("1")){
                                 doseOne++;
                             }
-                            if(doses.equals("1")){
+                            if(doses.equals("2")){
                                 doseTwo++;
                             }
 
                         }
-                    }
                     txtDose1.setText(valueOf(doseOne));
                     txtDose2.setText(valueOf(doseTwo));
 
@@ -433,14 +458,181 @@ public class dashboard extends AppCompatActivity {
         }
         //vaccine type and age group
         else if(county.equals("County")){
+           String lowAge;
+           String highAge;
+           Date date = new Date();
+           Calendar cal = new GregorianCalendar();
+           SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+           if(!age.equals("60+")) {
+               String[] ageSplit = age.split("-", -2);
+               lowAge = ageSplit[0];
+               highAge = ageSplit[1];
+           }
+           else{
+               lowAge = "60";
+               highAge = "150";
+           }
 
+
+           int intLow = Integer.parseInt(lowAge);
+           int intHigh = Integer.parseInt(highAge);
+           cal.add(Calendar.YEAR, -intLow);
+           Date low = cal.getTime();
+           cal.add(Calendar.YEAR, -intHigh);
+           Date high = cal.getTime();
+           String eeee = "0000";
+
+           String sdflow = sdf.format(low) + eeee;
+           String rrrr = "9999";
+           String sdfhigh = sdf.format(high) + rrrr;
+           String fuck = sdflow + eeee;
+           String fuck2 = sdfhigh + rrrr;
+
+           Query QageType=ref.whereEqualTo("Vaccine", vaccineType).orderBy("SSN").startAt(fuck2).endAt(fuck);
+           QageType.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+               @Override
+               public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                   int doseOne = 0;
+                   int doseTwo = 0;
+                   for (DocumentSnapshot document : queryDocumentSnapshots) {
+
+                       String doses = document.getString("Doses");
+                       if (doses.equals("1")) {
+                           doseOne++;
+                       }
+                       if (doses.equals("2")) {
+                           doseTwo++;
+                       }
+                   }
+
+
+                   txtDose1.setText(valueOf(doseOne));
+                   txtDose2.setText(valueOf(doseTwo));
+
+
+
+               }
+
+           });
         }
         //county and age group
-        else if(county.equals("County")){
+        else if(vaccineType.equals("vaccine")){
+           String lowAge;
+           String highAge;
+           Date date = new Date();
+           Calendar cal = new GregorianCalendar();
+           SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+           if(!age.equals("60+")) {
+               String[] ageSplit = age.split("-", -2);
+               lowAge = ageSplit[0];
+               highAge = ageSplit[1];
+           }
+           else{
+               lowAge = "60";
+               highAge = "150";
+           }
 
+           int intLow = Integer.parseInt(lowAge);
+           int intHigh = Integer.parseInt(highAge);
+           cal.add(Calendar.YEAR, -intLow);
+           Date low = cal.getTime();
+           cal.add(Calendar.YEAR, -intHigh);
+           Date high = cal.getTime();
+           String eeee = "0000";
+
+           String sdflow = sdf.format(low) + eeee;
+           String rrrr = "9999";
+           String sdfhigh = sdf.format(high) + rrrr;
+           String fuck = sdflow + eeee;
+           String fuck2 = sdfhigh + rrrr;
+
+           Query QageCounty=ref.whereEqualTo("county", county).orderBy("SSN").startAt(fuck2).endAt(fuck);
+           QageCounty.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+               @Override
+               public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                   int doseOne = 0;
+                   int doseTwo = 0;
+                   for (DocumentSnapshot document : queryDocumentSnapshots) {
+
+                       String doses = document.getString("Doses");
+                       if (doses.equals("1")) {
+                           doseOne++;
+                       }
+                       if (doses.equals("2")) {
+                           doseTwo++;
+                       }
+                   }
+
+
+                   txtDose1.setText(valueOf(doseOne));
+                   txtDose2.setText(valueOf(doseTwo));
+
+
+
+               }
+
+           });
         }
         //all
         else {
+
+           String lowAge;
+           String highAge;
+           Date date = new Date();
+           Calendar cal = new GregorianCalendar();
+           SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+           if(!age.equals("60+")) {
+               String[] ageSplit = age.split("-", -2);
+               lowAge = ageSplit[0];
+               highAge = ageSplit[1];
+           }
+           else{
+               lowAge = "60";
+               highAge = "150";
+           }
+
+
+           int intLow = Integer.parseInt(lowAge);
+           int intHigh = Integer.parseInt(highAge);
+           cal.add(Calendar.YEAR, -intLow);
+           Date low = cal.getTime();
+           cal.add(Calendar.YEAR, -intHigh);
+           Date high = cal.getTime();
+           String eeee = "0000";
+
+           String sdflow = sdf.format(low) + eeee;
+           String rrrr = "9999";
+           String sdfhigh = sdf.format(high) + rrrr;
+           String fuck = sdflow + eeee;
+           String fuck2 = sdfhigh + rrrr;
+
+           Query QageCountyType=ref.orderBy("SSN").startAt(fuck2).endAt(fuck).whereEqualTo("Vaccine", vaccineType).whereEqualTo("county", county);
+           QageCountyType.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+               @Override
+               public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                   int doseOne = 0;
+                   int doseTwo = 0;
+                   for (DocumentSnapshot document : queryDocumentSnapshots) {
+
+                       String doses = document.getString("Doses");
+                       if (doses.equals("1")) {
+                           doseOne++;
+                       }
+                       if (doses.equals("2")) {
+                           doseTwo++;
+                       }
+                   }
+
+
+                   txtDose1.setText(valueOf(doseOne));
+                   txtDose2.setText(valueOf(doseTwo));
+
+
+
+               }
+
+           });
+
         }
 
 
