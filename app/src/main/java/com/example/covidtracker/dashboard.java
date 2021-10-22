@@ -376,7 +376,8 @@ public class dashboard extends AppCompatActivity {
            String lowAge;
            String highAge;
             Date date = new Date();
-            Calendar cal = new GregorianCalendar();
+            Calendar callow = new GregorianCalendar();
+            Calendar calhigh = new GregorianCalendar();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             if(!age.equals("60+")) {
                 String[] ageSplit = age.split("-", -2);
@@ -389,19 +390,16 @@ public class dashboard extends AppCompatActivity {
             }
             int intLow = Integer.parseInt(lowAge);
             int intHigh = Integer.parseInt(highAge);
-            cal.add(Calendar.YEAR, -intLow);
-            Date low = cal.getTime();
-            cal.add(Calendar.YEAR, -intHigh);
-            Date high = cal.getTime();
+            callow.add(Calendar.YEAR, -intLow);
+            Date low = callow.getTime();
+            calhigh.add(Calendar.YEAR, -intHigh);
+            Date high = calhigh.getTime();
             String eeee = "0000";
-
             String sdflow = sdf.format(low) + eeee;
             String rrrr = "9999";
             String sdfhigh = sdf.format(high) + rrrr;
-            String fuck = sdflow + eeee;
-            String fuck2 = sdfhigh + rrrr;
 
-           Query Qage=ref.orderBy("SSN").startAt(fuck2).endAt(fuck);
+           Query Qage=ref.orderBy("SSN").startAt(sdfhigh).endAt(sdflow);
             Qage.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -419,8 +417,8 @@ public class dashboard extends AppCompatActivity {
                         }
 
 
-                       txtDose1.setText(valueOf(doseOne));
-                        txtDose2.setText(valueOf(doseTwo));
+                    txtDose1.setText(valueOf(doseOne));
+                    txtDose2.setText(valueOf(doseTwo));
 
 
 
@@ -461,7 +459,8 @@ public class dashboard extends AppCompatActivity {
            String lowAge;
            String highAge;
            Date date = new Date();
-           Calendar cal = new GregorianCalendar();
+           Calendar callow = new GregorianCalendar();
+           Calendar calhigh = new GregorianCalendar();
            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
            if(!age.equals("60+")) {
                String[] ageSplit = age.split("-", -2);
@@ -472,23 +471,19 @@ public class dashboard extends AppCompatActivity {
                lowAge = "60";
                highAge = "150";
            }
-
-
            int intLow = Integer.parseInt(lowAge);
            int intHigh = Integer.parseInt(highAge);
-           cal.add(Calendar.YEAR, -intLow);
-           Date low = cal.getTime();
-           cal.add(Calendar.YEAR, -intHigh);
-           Date high = cal.getTime();
+           callow.add(Calendar.YEAR, -intLow);
+           Date low = callow.getTime();
+           calhigh.add(Calendar.YEAR, -intHigh);
+           Date high = calhigh.getTime();
            String eeee = "0000";
 
            String sdflow = sdf.format(low) + eeee;
            String rrrr = "9999";
            String sdfhigh = sdf.format(high) + rrrr;
-           String fuck = sdflow + eeee;
-           String fuck2 = sdfhigh + rrrr;
 
-           Query QageType=ref.whereEqualTo("Vaccine", vaccineType).orderBy("SSN").startAt(fuck2).endAt(fuck);
+           Query QageType=ref.whereEqualTo("Vaccine", vaccineType).orderBy("SSN").startAt(sdfhigh).endAt(sdflow);
            QageType.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                @Override
                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -520,7 +515,8 @@ public class dashboard extends AppCompatActivity {
            String lowAge;
            String highAge;
            Date date = new Date();
-           Calendar cal = new GregorianCalendar();
+           Calendar callow = new GregorianCalendar();
+           Calendar calhigh = new GregorianCalendar();
            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
            if(!age.equals("60+")) {
                String[] ageSplit = age.split("-", -2);
@@ -531,22 +527,19 @@ public class dashboard extends AppCompatActivity {
                lowAge = "60";
                highAge = "150";
            }
-
            int intLow = Integer.parseInt(lowAge);
            int intHigh = Integer.parseInt(highAge);
-           cal.add(Calendar.YEAR, -intLow);
-           Date low = cal.getTime();
-           cal.add(Calendar.YEAR, -intHigh);
-           Date high = cal.getTime();
+           callow.add(Calendar.YEAR, -intLow);
+           Date low = callow.getTime();
+           calhigh.add(Calendar.YEAR, -intHigh);
+           Date high = calhigh.getTime();
            String eeee = "0000";
 
            String sdflow = sdf.format(low) + eeee;
            String rrrr = "9999";
            String sdfhigh = sdf.format(high) + rrrr;
-           String fuck = sdflow + eeee;
-           String fuck2 = sdfhigh + rrrr;
 
-           Query QageCounty=ref.whereEqualTo("county", county).orderBy("SSN").startAt(fuck2).endAt(fuck);
+           Query QageCounty=ref.whereEqualTo("county", county).orderBy("SSN").startAt(sdfhigh).endAt(sdflow);
            QageCounty.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                @Override
                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -579,7 +572,8 @@ public class dashboard extends AppCompatActivity {
            String lowAge;
            String highAge;
            Date date = new Date();
-           Calendar cal = new GregorianCalendar();
+           Calendar callow = new GregorianCalendar();
+           Calendar calhigh = new GregorianCalendar();
            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
            if(!age.equals("60+")) {
                String[] ageSplit = age.split("-", -2);
@@ -590,23 +584,19 @@ public class dashboard extends AppCompatActivity {
                lowAge = "60";
                highAge = "150";
            }
-
-
            int intLow = Integer.parseInt(lowAge);
            int intHigh = Integer.parseInt(highAge);
-           cal.add(Calendar.YEAR, -intLow);
-           Date low = cal.getTime();
-           cal.add(Calendar.YEAR, -intHigh);
-           Date high = cal.getTime();
+           callow.add(Calendar.YEAR, -intLow);
+           Date low = callow.getTime();
+           calhigh.add(Calendar.YEAR, -intHigh);
+           Date high = calhigh.getTime();
            String eeee = "0000";
 
            String sdflow = sdf.format(low) + eeee;
            String rrrr = "9999";
            String sdfhigh = sdf.format(high) + rrrr;
-           String fuck = sdflow + eeee;
-           String fuck2 = sdfhigh + rrrr;
 
-           Query QageCountyType=ref.orderBy("SSN").startAt(fuck2).endAt(fuck).whereEqualTo("Vaccine", vaccineType).whereEqualTo("county", county);
+           Query QageCountyType=ref.whereEqualTo("Vaccine", vaccineType).whereEqualTo("county", county).orderBy("SSN").startAt(sdfhigh).endAt(sdflow);
            QageCountyType.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                @Override
                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
