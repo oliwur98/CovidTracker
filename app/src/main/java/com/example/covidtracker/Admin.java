@@ -34,6 +34,7 @@ public class Admin extends AppCompatActivity {
     Button btbSave;
     Button btbFilter;
     Button btbAgegroup;
+    Button btnresp;
 
     FirebaseAuth auth;
     FirebaseFirestore userData;
@@ -51,6 +52,7 @@ public class Admin extends AppCompatActivity {
         btbSave = findViewById(R.id.save_admin);
         btbFilter = findViewById(R.id.filterCounty);
         btbAgegroup = findViewById(R.id.btb_agegroup);
+        btnresp = findViewById(R.id.resp);
 
         auth = FirebaseAuth.getInstance();
         userData = FirebaseFirestore.getInstance();
@@ -103,6 +105,13 @@ public class Admin extends AppCompatActivity {
             }
         });
 
+        btnresp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent_filter = new Intent(Admin.this, Admin_boxes.class);
+                startActivity(intent_filter);
+            }
+        });
 
     }
 }

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -55,6 +56,8 @@ public class booking extends AppCompatActivity {
     private String month_booked;
     private String day_booked;
     String UserID;
+    private CheckBox yes1,yes2,yes3;
+    private String email;
 
 
     @Override
@@ -65,6 +68,9 @@ public class booking extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         userData = FirebaseFirestore.getInstance();
         btn_book = (Button) findViewById(R.id.button);
+        yes1 = (CheckBox) findViewById(R.id.yes1);
+        yes2 = (CheckBox) findViewById(R.id.yes2);
+        yes3 = (CheckBox) findViewById(R.id.yes3);
 
         SpinnerVaccine = (Spinner) findViewById(R.id.spinner_vaccine);
         String[] items = new String[]{" ", "Pfizer", "Moderna"};
@@ -82,6 +88,8 @@ public class booking extends AppCompatActivity {
                 String county = documentSnapshot.getString("county");
 
                 DocumentReference doc = userData.collection("County").document(county);
+                email = documentSnapshot.getString("email");
+
                 hmm(county);
             }
         });
@@ -156,17 +164,141 @@ public class booking extends AppCompatActivity {
                     if(already_booked.equals(day_time)) isExisting = true;
                 }
                 if(!isExisting) {
+                    if(yes1.isChecked() && yes2.isChecked() && yes3.isChecked()){
+                        DocumentReference documentReference = userData.collection("Boxes").document(UserID);
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("id", UserID);
+                        user.put("box", "yes");
+                        user.put("booked_day_time", Choose_date.getText().toString() + " at " + SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
+                        user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
+                        user.put("numeric_date", numeric_date);
+                        user.put("month_first_vaccination", month_booked);
+                        user.put("day_first_vaccination", day_booked);
+                        user.put("email",email);
+                        user.put("center",spinnerCounty.getSelectedItem().toString());
+                        user.put("sick","The user has checked all the boxes");
 
-                    DocumentReference documentReference = userData.collection("Users").document(UserID);
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("booked_day_time", Choose_date.getText().toString() +" at "+ SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
-                    user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
-                    user.put("numeric_date", numeric_date);
-                    user.put("month_first_vaccination", month_booked);
-                    user.put("day_first_vaccination", day_booked);
-                    user.put("center", spinnerCounty.getSelectedItem().toString());
-                    documentReference.update(user);
+                        documentReference.set(user);
+                        Toast.makeText(booking.this, "Healthcare administrator have to look through your medical papers", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(yes1.isChecked() && yes2.isChecked()){
+                        DocumentReference documentReference = userData.collection("Boxes").document(UserID);
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("id", UserID);
+                        user.put("box", "yes");
+                        user.put("booked_day_time", Choose_date.getText().toString() + " at " + SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
+                        user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
+                        user.put("numeric_date", numeric_date);
+                        user.put("month_first_vaccination", month_booked);
+                        user.put("day_first_vaccination", day_booked);
+                        user.put("email",email);
+                        user.put("center",spinnerCounty.getSelectedItem().toString());
+                        user.put("sick","The user takes blood thinning medication and has had an allergic reaction from a vaccine before");
 
+                        documentReference.set(user);
+                        Toast.makeText(booking.this, "Healthcare administrator have to look through your medical papers", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(yes1.isChecked() && yes3.isChecked()){
+                        DocumentReference documentReference = userData.collection("Boxes").document(UserID);
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("id", UserID);
+                        user.put("box", "yes");
+                        user.put("booked_day_time", Choose_date.getText().toString() + " at " + SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
+                        user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
+                        user.put("numeric_date", numeric_date);
+                        user.put("month_first_vaccination", month_booked);
+                        user.put("day_first_vaccination", day_booked);
+                        user.put("email",email);
+                        user.put("center",spinnerCounty.getSelectedItem().toString());
+                        user.put("sick","The user is pregnant and has had an allergic reaction from a vaccine before");
+
+                        documentReference.set(user);
+                        Toast.makeText(booking.this, "Healthcare administrator have to look through your medical papers", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(yes2.isChecked() && yes3.isChecked()){
+                        DocumentReference documentReference = userData.collection("Boxes").document(UserID);
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("id", UserID);
+                        user.put("box", "yes");
+                        user.put("booked_day_time", Choose_date.getText().toString() + " at " + SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
+                        user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
+                        user.put("numeric_date", numeric_date);
+                        user.put("month_first_vaccination", month_booked);
+                        user.put("day_first_vaccination", day_booked);
+                        user.put("email",email);
+                        user.put("center",spinnerCounty.getSelectedItem().toString());
+                        user.put("sick","The user take blood thinning medication and is pregnant");
+
+                        documentReference.set(user);
+                        Toast.makeText(booking.this, "Healthcare administrator have to look through your medical papers", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(yes1.isChecked()){
+                        DocumentReference documentReference = userData.collection("Boxes").document(UserID);
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("id", UserID);
+                        user.put("box", "yes");
+                        user.put("booked_day_time", Choose_date.getText().toString() + " at " + SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
+                        user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
+                        user.put("numeric_date", numeric_date);
+                        user.put("month_first_vaccination", month_booked);
+                        user.put("day_first_vaccination", day_booked);
+                        user.put("email",email);
+                        user.put("center",spinnerCounty.getSelectedItem().toString());
+                        user.put("sick","The user has had a allergic reaction before from a vaccine");
+
+                        documentReference.set(user);
+                        Toast.makeText(booking.this, "Healthcare administrator have to look through your medical papers", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(yes2.isChecked()){
+                        DocumentReference documentReference = userData.collection("Boxes").document(UserID);
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("id", UserID);
+                        user.put("box", "yes");
+                        user.put("booked_day_time", Choose_date.getText().toString() + " at " + SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
+                        user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
+                        user.put("numeric_date", numeric_date);
+                        user.put("month_first_vaccination", month_booked);
+                        user.put("day_first_vaccination", day_booked);
+                        user.put("email",email);
+                        user.put("center",spinnerCounty.getSelectedItem().toString());
+                        user.put("sick","The user take blood thinning medication");
+
+                        documentReference.set(user);
+                        Toast.makeText(booking.this, "Healthcare administrator have to look through your medical papers", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(yes3.isChecked()){
+                        DocumentReference documentReference = userData.collection("Boxes").document(UserID);
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("id", UserID);
+                        user.put("box", "yes");
+                        user.put("booked_day_time", Choose_date.getText().toString() + " at " + SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
+                        user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
+                        user.put("numeric_date", numeric_date);
+                        user.put("month_first_vaccination", month_booked);
+                        user.put("day_first_vaccination", day_booked);
+                        user.put("email",email);
+                        user.put("center",spinnerCounty.getSelectedItem().toString());
+                        user.put("sick","The user is pregnant");
+
+                        documentReference.set(user);
+                        Toast.makeText(booking.this, "Healthcare administrator have to look through your medical papers", Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+                    else {
+                        DocumentReference documentReference2 = userData.collection("Users").document(UserID);
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("booked_day_time", Choose_date.getText().toString() + " at " + SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
+                        user.put("Vaccine", SpinnerVaccine.getSelectedItem().toString());
+                        user.put("numeric_date", numeric_date);
+                        user.put("month_first_vaccination", month_booked);
+                        user.put("day_first_vaccination", day_booked);
+                        user.put("center",spinnerCounty.getSelectedItem().toString());
+                        documentReference2.update(user);
+
+                        Toast.makeText(booking.this, "Appointment booked", Toast.LENGTH_SHORT).show();
+                    }
                     Intent intent = new Intent(booking.this, dashboard.class);
                     startActivity(intent);
                 }
@@ -174,6 +306,7 @@ public class booking extends AppCompatActivity {
             }
         });
     }
+
 
 
     boolean booking_check(){

@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CovidTracker">
         <activity
+            android:name=".Admin_boxes"
+            android:exported="true" />
+
+        <activity
             android:name=".allow_appointments"
             android:exported="true" />
         <activity
@@ -53,11 +57,12 @@
             android:name=".login"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+
         <activity
             android:name=".booking"
             android:exported="true" />

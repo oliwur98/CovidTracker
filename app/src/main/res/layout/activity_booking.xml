@@ -21,89 +21,78 @@
         app:layout_constraintVertical_bias="0.002" />
 
     <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Leave boxes empty if your answer is no!"
-        app:layout_constraintEnd_toEndOf="@+id/textView5"
-        app:layout_constraintHorizontal_bias="0.952"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <TextView
         android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_width="184dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="48dp"
         android:text="Have you ever had a allergic\nreaction from a vaccine before? "
-        app:layout_constraintEnd_toStartOf="@+id/checkBox"
-        app:layout_constraintHorizontal_bias="0.974"
+        app:layout_constraintEnd_toStartOf="@+id/yes1"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/yes1"
         android:layout_width="wrap_content"
         android:layout_height="30sp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="68dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="92dp"
         android:text="Yes"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="28dp"
         android:text="Do you take any blood\nthinning medication?"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox2"
-        app:layout_constraintHorizontal_bias="0.431"
+        app:layout_constraintEnd_toStartOf="@+id/yes2"
+        app:layout_constraintHorizontal_bias="0.377"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/yes2"
         android:layout_width="wrap_content"
         android:layout_height="30sp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="68dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="92dp"
         android:text="Yes"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/yes1" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
         android:text="Are you pregnant?"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox3"
-        app:layout_constraintHorizontal_bias="0.01"
+        app:layout_constraintEnd_toStartOf="@+id/yes3"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <CheckBox
-        android:id="@+id/checkBox3"
+        android:id="@+id/yes3"
         android:layout_width="wrap_content"
         android:layout_height="30sp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="68dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="92dp"
         android:text="Yes"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
+        app:layout_constraintTop_toBottomOf="@+id/yes2" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:text="Which vaccine would\nyou like to have?"
         app:layout_constraintEnd_toStartOf="@+id/spinner_vaccine"
-        app:layout_constraintHorizontal_bias="0.777"
+        app:layout_constraintHorizontal_bias="0.616"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
@@ -115,7 +104,7 @@
         android:layout_marginEnd="16dp"
         android:spinnerMode="dialog"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
+        app:layout_constraintTop_toBottomOf="@+id/yes3" />
 
     <Spinner
         android:id="@+id/spinner_county"
@@ -169,9 +158,43 @@
         android:text="Which vaccination center\n would you want?"
         app:layout_constraintBottom_toTopOf="@+id/choose_date"
         app:layout_constraintEnd_toStartOf="@+id/spinner_county"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.708"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10"
-        app:layout_constraintVertical_bias="0.294" />
+        app:layout_constraintVertical_bias="0.279" />
+
+    <CheckBox
+        android:id="@+id/checkBox4"
+        android:layout_width="58dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="56dp"
+        android:text="No"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.558"
+        app:layout_constraintStart_toEndOf="@+id/yes1"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <CheckBox
+        android:id="@+id/checkBox5"
+        android:layout_width="58dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="24dp"
+        android:text="No"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toEndOf="@+id/yes2"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
+
+    <CheckBox
+        android:id="@+id/checkBox6"
+        android:layout_width="58dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        android:text="No"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.272"
+        app:layout_constraintStart_toEndOf="@+id/yes3"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

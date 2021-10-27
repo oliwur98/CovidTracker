@@ -67,6 +67,7 @@ public class dashboard extends AppCompatActivity {
     public int check = 0;
 
     String which_booking;
+    String box;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +163,9 @@ public class dashboard extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 String vaccine_dose_date = documentSnapshot.getString("numeric_date");
+                System.out.println("EHAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                System.out.println(vaccine_dose_date);
+                System.out.println(userID);
 
 
                 Date date = new Date();
@@ -202,6 +206,13 @@ public class dashboard extends AppCompatActivity {
             }
         });
 
+        DocumentReference documentReference1 = userData.collection("Boxes").document(userID);
+        documentReference1.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                  box = documentSnapshot.getString("box");
+            }
+        });
 
         DocumentReference documentReference2 = userData.collection("Users").document(userID);
         documentReference2.addSnapshotListener(this, new EventListener<DocumentSnapshot>(){
@@ -279,6 +290,7 @@ public class dashboard extends AppCompatActivity {
 
 
 
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -300,18 +312,26 @@ public class dashboard extends AppCompatActivity {
                         Intent intent_covidProof = new Intent(dashboard.this, qrcode.class);
                         startActivity(intent_covidProof);
                         break;
+
                     case R.id.nav_booking:
 
-                        if(check == 1) {
-                            if(which_booking.equals("0")) {
-                                Intent intent_bookings = new Intent(dashboard.this, booking.class);
-                                startActivity(intent_bookings);
+                        if(check== 1) {
+                            if(box.equals("no")) {
+
+                                if (which_booking.equals("0")) {
+                                    Intent intent_bookings = new Intent(dashboard.this, booking.class);
+                                    startActivity(intent_bookings);
+                                } else if (which_booking.equals("1")) {
+                                    Intent intent_bookings2 = new Intent(dashboard.this, booking_dose2.class);
+                                    startActivity(intent_bookings2);
+                                } else
+                                    Toast.makeText(dashboard.this, "You are fully vaccinated", Toast.LENGTH_SHORT).show();
+
                             }
-                            else if(which_booking.equals("1")){
-                                Intent intent_bookings2 = new Intent(dashboard.this, booking_dose2.class);
-                                startActivity(intent_bookings2);
-                            }
-                            else Toast.makeText(dashboard.this, "You are fully vaccinated", Toast.LENGTH_SHORT).show();
+                            else{
+                                Toast.makeText(dashboard.this, "Wait for a response from healthcare administrator", Toast.LENGTH_SHORT).show();
+                                }
+
                         }
                         else{
                             Toast.makeText(dashboard.this, "Cant make an appointment, not in the right age group", Toast.LENGTH_SHORT).show();
