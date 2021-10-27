@@ -55,7 +55,7 @@ public class Track_and_Manage extends AppCompatActivity {
     }
 
     private void EventChangeListener() {
-        db.collection("Users").orderBy("firstName", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
@@ -69,15 +69,17 @@ public class Track_and_Manage extends AppCompatActivity {
                 }
 
                 for(DocumentChange dc : value.getDocumentChanges()){
+                    //VAD SKA DET STÅ HÄR FFS
 
                     if(dc.getType() == DocumentChange.Type.ADDED){
-                        userArrayList.add(dc.getDocument().toObject(Users.class));
-                    }
+                            userArrayList.add(dc.getDocument().toObject(Users.class));
+                        }
 
-                    myAdapter.notifyDataSetChanged();
-                    if(progressDialog.isShowing()){
-                        progressDialog.dismiss();
-                    }
+                        myAdapter.notifyDataSetChanged();
+                        if(progressDialog.isShowing()){
+                            progressDialog.dismiss();
+                        }
+
                 }
 
             }

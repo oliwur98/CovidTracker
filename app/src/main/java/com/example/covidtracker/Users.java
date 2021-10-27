@@ -3,7 +3,8 @@ package com.example.covidtracker;
 public class Users {
 
     String firstName, lastName;
-    long doses;
+    String booked_day_time;
+    String county;
 
     public Users(){}
 
@@ -12,10 +13,11 @@ public class Users {
         return firstName;
     }
 
-    public Users(String firstName, String lastName, long doses) {
+    public Users(String firstName, String lastName, String booked_day_time, String county) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.doses = doses;
+        this.booked_day_time = booked_day_time;
+        this.county = county;
     }
 
     public void setFirstName(String firstName) {
@@ -30,11 +32,15 @@ public class Users {
         this.lastName = lastName;
     }
 
-    public long getDoses() {
-        return doses;
+    public String getBooked_day_time() {
+        return booked_day_time;
     }
 
-    public void setDoses(long doses) {
-        this.doses = doses;
+    public void setBooked_day_time(String booked_day_time) {
+        this.booked_day_time = booked_day_time;
     }
+
+    public void setCounty(String county) {this.county = county;}
+
+    public String getCounty(){return county;}
 }

@@ -35,10 +35,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
+
         Users user = usersArrayList.get(position);
         holder.firstName.setText(user.firstName);
         holder.lastName.setText(user.lastName);
-        holder.doses.setText(String.valueOf(user.doses));
+        holder.booked_day_time.setText(String.valueOf(user.booked_day_time));
 
 
     }
@@ -50,7 +51,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView firstName, lastName, doses;
+        TextView firstName, lastName, booked_day_time;
 
 
 
@@ -58,7 +59,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             super(itemView);
             firstName = itemView.findViewById(R.id.cardfirstName);
             lastName = itemView.findViewById(R.id.cardlastName);
-            doses = itemView.findViewById(R.id.cardDoses);
+            booked_day_time = itemView.findViewById(R.id.cardBookedTime);
         }
     }
 }

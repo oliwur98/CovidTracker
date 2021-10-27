@@ -13,12 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CovidTracker">
         <activity
+            android:name=".allow_appointments"
+            android:exported="true" />
+        <activity
+            android:name=".bookedTimesCounty"
+            android:exported="true" />
+        <activity
             android:name=".filterCounty"
             android:exported="true" />
         <activity
             android:name=".booking_dose2"
             android:exported="true" />
-
         <activity
             android:name=".Track_and_Manage"
             android:exported="true" />

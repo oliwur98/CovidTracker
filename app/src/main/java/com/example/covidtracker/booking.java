@@ -164,6 +164,7 @@ public class booking extends AppCompatActivity {
                     user.put("numeric_date", numeric_date);
                     user.put("month_first_vaccination", month_booked);
                     user.put("day_first_vaccination", day_booked);
+                    user.put("center", spinnerCounty.getSelectedItem().toString());
                     documentReference.update(user);
 
                     Intent intent = new Intent(booking.this, dashboard.class);

@@ -168,6 +168,7 @@ public class booking_dose2 extends AppCompatActivity {
                     Map<String, Object> user = new HashMap<>();
                     user.put("booked_day_time", Choose_date.getText().toString() +" at "+ SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString());
                     user.put("numeric_date", numeric_date);
+                    user.put("center", spinnerCounty.getSelectedItem().toString());
                     documentReference.update(user);
 
                     Intent intent = new Intent(booking_dose2.this, dashboard.class);
