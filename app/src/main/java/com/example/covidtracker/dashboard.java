@@ -113,6 +113,36 @@ public class dashboard extends AppCompatActivity {
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, type);
         spinnerVaccineType.setAdapter(typeAdapter);
 
+        CollectionReference ref = userData.collection("Users");
+        String qq = "1";
+        String ww = "2";
+        Query Qnone=ref.orderBy("Doses").startAt(0);
+        Qnone.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                int doseOne = 0;
+                int doseTwo = 0;
+                for(DocumentSnapshot document : queryDocumentSnapshots){
+
+                    String doses = document.getString("Doses");
+                    if(doses.equals("1")){
+                        doseOne++;
+                    }
+                    if(doses.equals("2")){
+                        doseTwo++;
+                    }
+
+                }
+                txtDose1.setText(valueOf(doseOne));
+                txtDose2.setText(valueOf(doseTwo));
+
+
+
+            }
+        });
+
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
