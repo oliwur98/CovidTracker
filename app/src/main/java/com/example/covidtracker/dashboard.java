@@ -104,7 +104,7 @@ public class dashboard extends AppCompatActivity {
         spinnerCounty.setAdapter(countyAdapter);
 
 
-        String[] age = new String[]{"Age Group", "0-10", "11-20", "21-30", "31-40", "41-50", "51-60", "60+"};
+        String[] age = new String[]{"Age Group","18-30", "31-40", "41-50", "51-60", "60+"};
         ArrayAdapter<String> ageAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, age);
         spinnerAge.setAdapter(ageAdapter);
 
