@@ -33,6 +33,8 @@ public class Admin extends AppCompatActivity {
     Button btbTrack_manage;
     Button btbSave;
     Button btbFilter;
+    Button btbAgegroup;
+    Button btnresp;
 
     FirebaseAuth auth;
     FirebaseFirestore userData;
@@ -49,30 +51,18 @@ public class Admin extends AppCompatActivity {
         btbTrack_manage = findViewById(R.id.Tracking_admin);
         btbSave = findViewById(R.id.save_admin);
         btbFilter = findViewById(R.id.filterCounty);
-
-        dropdown = findViewById(R.id.allow_age_spinner);
+        btbAgegroup = findViewById(R.id.btb_agegroup);
+        btnresp = findViewById(R.id.resp);
 
         auth = FirebaseAuth.getInstance();
         userData = FirebaseFirestore.getInstance();
         userID = auth.getCurrentUser().getUid();
 
 
-        List<String> list = new ArrayList<>();
-        for(int i = 5; i < 100; i++){
-            if(i == 99){
-                list.add("99+");
-                break;
-            }
-            list.add(String.valueOf(i));
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
-
-        dropdown.setAdapter(adapter);
-
         btbTrack_manage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent_manage = new Intent(Admin.this, Track_and_Manage.class);
+                Intent intent_manage = new Intent(Admin.this, bookedTimesCounty.class);
                 startActivity(intent_manage);
             }
         });
@@ -87,6 +77,14 @@ public class Admin extends AppCompatActivity {
                 documentReference.update(user);
 
 
+            }
+        });
+
+        btbAgegroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent_agegroup = new Intent(Admin.this, allow_appointments.class);
+                startActivity(intent_agegroup);
             }
         });
 
@@ -107,6 +105,13 @@ public class Admin extends AppCompatActivity {
             }
         });
 
+        btnresp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent_filter = new Intent(Admin.this, Admin_boxes.class);
+                startActivity(intent_filter);
+            }
+        });
 
     }
 }

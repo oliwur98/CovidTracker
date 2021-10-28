@@ -2,6 +2,7 @@ package com.example.covidtracker;
 
 import static java.lang.String.valueOf;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -14,8 +15,11 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -27,6 +31,7 @@ public class filterCounty extends AppCompatActivity {
     TextView WdoseOneText;
     TextView WdoseTwoText;
     TextView fullyVaccinatedText;
+    TextView totalVaccinLeftText;
     Button update;
 
     @Override
@@ -41,11 +46,12 @@ public class filterCounty extends AppCompatActivity {
         WdoseOneText = (TextView) findViewById(R.id.total_waiting_dose1);
         WdoseTwoText = (TextView) findViewById(R.id.total_waiting_dose2);
         fullyVaccinatedText = (TextView) findViewById(R.id.total_vaccinated);
+        totalVaccinLeftText = (TextView) findViewById(R.id.total_vaccin_left);
         update = findViewById(R.id.update);
 
 
 
-        String[] items = new String[]{"County", "Blekinge", "Dalarna", "Gotland", "Gävleborg", "Halland", "Jämtland", "Jönköping", "kalmar", "Kronoberg", "Norrbotten", "Skåne", "Stockholm", "Södermanland", "Uppsala", "Värmland", "Västerbotten", "Västernorrland", "Västmanland", "Västra Götaland", "Örebro", "Östergötland"};
+        String[] items = new String[]{"County", "Blekinge", "Dalarna", "Gotland", "Gävleborg", "Halland", "Jämntland", "Jönköping", "kalmar", "Kronoberg", "Norrbotten", "Skåne", "Stockholm", "Södermanland", "Uppsala", "Värmland", "Västerbotten", "Västernorrland", "Västmanland", "Västra Götaland", "Örebro", "Östergötland"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
 
         spiCounty.setAdapter(adapter);
@@ -54,9 +60,24 @@ public class filterCounty extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateNumbers();
+                updateVaccin();
             }
         });
 
+
+
+    }
+
+    void updateVaccin(){
+        String county = spiCounty.getSelectedItem().toString();
+        DocumentReference documentReference = userData.collection("County").document(county).collection("vaccin").document("vaccin");
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                String numberOfVaccin = documentSnapshot.getString("vaccin");
+                totalVaccinLeftText.setText(numberOfVaccin);
+            }
+        });
 
 
     }

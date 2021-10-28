@@ -100,14 +100,13 @@ public class signUp extends AppCompatActivity {
                                         user.put("county", SpinnerCounty.getSelectedItem().toString());
                                         user.put("numeric_date", "0".toString());
                                         user.put("Doses","0".toString());
+                                        documentReference.set(user);
 
 
-                                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d(TAG, "created" + UserID);
-                                            }
-                                        });
+                                        DocumentReference documentReference1 = userData.collection("Boxes").document(UserID);
+                                        Map<String, Object> user2 = new HashMap<>();
+                                        user2.put("box", "no");
+                                        documentReference1.set(user2);
 
                                         Intent intent = new Intent(signUp.this, login.class);
                                         startActivity(intent);

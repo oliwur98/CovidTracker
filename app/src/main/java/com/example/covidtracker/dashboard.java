@@ -64,7 +64,10 @@ public class dashboard extends AppCompatActivity {
     TextView txtDose2;
     Button btnUpdate;
 
+    public int check = 0;
+
     String which_booking;
+    String box;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,6 +163,9 @@ public class dashboard extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 String vaccine_dose_date = documentSnapshot.getString("numeric_date");
+                System.out.println("EHAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                System.out.println(vaccine_dose_date);
+                System.out.println(userID);
 
 
                 Date date = new Date();
@@ -200,6 +206,13 @@ public class dashboard extends AppCompatActivity {
             }
         });
 
+        DocumentReference documentReference1 = userData.collection("Boxes").document(userID);
+        documentReference1.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                  box = documentSnapshot.getString("box");
+            }
+        });
 
         DocumentReference documentReference2 = userData.collection("Users").document(userID);
         documentReference2.addSnapshotListener(this, new EventListener<DocumentSnapshot>(){
@@ -213,7 +226,6 @@ public class dashboard extends AppCompatActivity {
                 String fullName = fName + space + lName;
 
                 SSN_test = documentSnapshot.getString("SSN");
-                System.out.println("-dw-dwa-adw-adwa-wddw-dwa-wadw-dawad-wda-wdawad-w-wdaw-adwd-a");
                 SSN = SSN_test.substring(0, SSN_test.length() - 4);
 
                 name.setText(fullName);
@@ -223,7 +235,7 @@ public class dashboard extends AppCompatActivity {
             }
         });
 
-        DocumentReference documentReference3 = userData.collection("Admin").document("admin");
+        /*DocumentReference documentReference3 = userData.collection("Admin").document("admin");
         documentReference3.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
@@ -239,7 +251,42 @@ public class dashboard extends AppCompatActivity {
                     ageCheck = true;
                 }
             }
+        });*/
+
+        DocumentReference documentReference5 = userData.collection("Admin").document("allowage");
+        documentReference5.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                int stop = 0;
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+                String sdfDate = sdf.format(date);
+
+                while (stop != -1) {
+                    String date_year = documentSnapshot.getString(String.valueOf(stop));
+                    String date_wihout_year;
+                    if(date_year != null) {
+                        date_wihout_year = date_year.substring(0, 8);
+                    }
+                    else{
+                        break;
+                    }
+                    String age = date_year.substring(9, date_year.length());
+
+                    if (Integer.parseInt(date_wihout_year) <= Integer.parseInt(sdfDate) && (Integer.parseInt(sdfDate) - Integer.parseInt(SSN)) >= Integer.parseInt(age)*10000) {
+                        check = 1;
+                        break;
+                    }
+                    else {
+                        stop++;
+                    }
+                }
+
+            }
+
         });
+
+
 
 
 
@@ -265,17 +312,26 @@ public class dashboard extends AppCompatActivity {
                         Intent intent_covidProof = new Intent(dashboard.this, qrcode.class);
                         startActivity(intent_covidProof);
                         break;
+
                     case R.id.nav_booking:
-                        if(ageCheck) {
-                            if(which_booking.equals("0")) {
-                                Intent intent_bookings = new Intent(dashboard.this, booking.class);
-                                startActivity(intent_bookings);
+
+                        if(check== 1) {
+                            if(box.equals("no")) {
+
+                                if (which_booking.equals("0")) {
+                                    Intent intent_bookings = new Intent(dashboard.this, booking.class);
+                                    startActivity(intent_bookings);
+                                } else if (which_booking.equals("1")) {
+                                    Intent intent_bookings2 = new Intent(dashboard.this, booking_dose2.class);
+                                    startActivity(intent_bookings2);
+                                } else
+                                    Toast.makeText(dashboard.this, "You are fully vaccinated", Toast.LENGTH_SHORT).show();
+
                             }
-                            else if(which_booking.equals("1")){
-                                Intent intent_bookings2 = new Intent(dashboard.this, booking_dose2.class);
-                                startActivity(intent_bookings2);
-                            }
-                            else Toast.makeText(dashboard.this, "You are fully vaccinated", Toast.LENGTH_SHORT).show();
+                            else{
+                                Toast.makeText(dashboard.this, "Wait for a response from healthcare administrator", Toast.LENGTH_SHORT).show();
+                                }
+
                         }
                         else{
                             Toast.makeText(dashboard.this, "Cant make an appointment, not in the right age group", Toast.LENGTH_SHORT).show();
@@ -290,10 +346,6 @@ public class dashboard extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 
     @Override
     public void onBackPressed(){
