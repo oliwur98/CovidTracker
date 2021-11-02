@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -120,6 +121,8 @@ public class allow_appointments extends AppCompatActivity {
                 user.put("Number of allowments", allowments);
                 user.put(allowments, Choose_date.getText().toString() + " " + dropdown.getSelectedItem().toString());
                 documentReference.update(user);
+
+                Toast.makeText(allow_appointments.this, "Age group updated", Toast.LENGTH_SHORT).show();
             }
         });
 
