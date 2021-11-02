@@ -154,7 +154,7 @@ public class booking extends AppCompatActivity {
 
     private void already_booked(){
         CollectionReference ref = userData.collection("Users");
-        String day_time = Choose_date.getText().toString() + SpinnerTime.getSelectedItem().toString() + spinnerCounty.getSelectedItem().toString();
+        String day_time = Choose_date.getText().toString() + " at " + SpinnerTime.getSelectedItem().toString() + " at clinic " + spinnerCounty.getSelectedItem().toString();
         Query q=ref.whereEqualTo("booked_day_time", day_time);
 
         q.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
