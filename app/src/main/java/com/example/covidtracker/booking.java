@@ -193,7 +193,7 @@ public class booking extends AppCompatActivity {
                         user.put("day_first_vaccination", day_booked);
                         user.put("email",email);
                         user.put("center",spinnerCounty.getSelectedItem().toString());
-                        user.put("sick","The user takes blood thinning medication and has had an allergic reaction from a vaccine before");
+                        user.put("sick","The user checked box 1 and 2");
 
                         documentReference.set(user);
                         Toast.makeText(booking.this, "Healthcare administrator have to look through your medical papers", Toast.LENGTH_SHORT).show();
@@ -210,7 +210,7 @@ public class booking extends AppCompatActivity {
                         user.put("day_first_vaccination", day_booked);
                         user.put("email",email);
                         user.put("center",spinnerCounty.getSelectedItem().toString());
-                        user.put("sick","The user is pregnant and has had an allergic reaction from a vaccine before");
+                        user.put("sick","The user checked box 1 and 3");
 
                         documentReference.set(user);
                         Toast.makeText(booking.this, "Healthcare administrator have to look through your medical papers", Toast.LENGTH_SHORT).show();
@@ -227,7 +227,7 @@ public class booking extends AppCompatActivity {
                         user.put("day_first_vaccination", day_booked);
                         user.put("email",email);
                         user.put("center",spinnerCounty.getSelectedItem().toString());
-                        user.put("sick","The user take blood thinning medication and is pregnant");
+                        user.put("sick","The user checked box 2 and 3");
 
                         documentReference.set(user);
                         Toast.makeText(booking.this, "Healthcare administrator have to look through your medical papers", Toast.LENGTH_SHORT).show();
