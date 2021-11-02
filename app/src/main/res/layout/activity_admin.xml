@@ -46,18 +46,6 @@
         app:layout_constraintVertical_bias="0.909" />
 
     <Button
-        android:id="@+id/save_admin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.762" />
-
-    <Button
         android:id="@+id/filterCounty"
         android:layout_width="211dp"
         android:layout_height="90dp"
@@ -70,25 +58,24 @@
 
     <Button
         android:id="@+id/btb_agegroup"
-        android:layout_width="187dp"
-        android:layout_height="73dp"
+        android:layout_width="211dp"
+        android:layout_height="90dp"
         android:text="Age group"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.437" />
+        app:layout_constraintVertical_bias="0.453" />
 
     <Button
         android:id="@+id/resp"
-        android:layout_width="188dp"
-        android:layout_height="93dp"
+        android:layout_width="211dp"
+        android:layout_height="90dp"
         android:text="Questionare response"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.578" />
+        app:layout_constraintVertical_bias="0.619" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

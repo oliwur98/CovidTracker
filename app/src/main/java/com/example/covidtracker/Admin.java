@@ -31,7 +31,6 @@ public class Admin extends AppCompatActivity {
 
     Button btbLogout;
     Button btbTrack_manage;
-    Button btbSave;
     Button btbFilter;
     Button btbAgegroup;
     Button btnresp;
@@ -49,7 +48,6 @@ public class Admin extends AppCompatActivity {
 
         btbLogout = findViewById(R.id.Logout_admin);
         btbTrack_manage = findViewById(R.id.Tracking_admin);
-        btbSave = findViewById(R.id.save_admin);
         btbFilter = findViewById(R.id.filterCounty);
         btbAgegroup = findViewById(R.id.btb_agegroup);
         btnresp = findViewById(R.id.resp);
@@ -67,7 +65,7 @@ public class Admin extends AppCompatActivity {
             }
         });
 
-        btbSave.setOnClickListener(new View.OnClickListener() {
+        /*btbSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dropdown_value = (String) dropdown.getSelectedItem();
@@ -78,7 +76,7 @@ public class Admin extends AppCompatActivity {
 
 
             }
-        });
+        });*/
 
         btbAgegroup.setOnClickListener(new View.OnClickListener() {
             @Override

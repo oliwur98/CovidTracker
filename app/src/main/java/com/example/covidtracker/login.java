@@ -94,7 +94,7 @@ public class login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(EditTextEmail.getText().toString().equals("bjort@gmail.com")){
+                if(EditTextEmail.getText().toString().equals("admin@gmail.com")){
                     auth.signInWithEmailAndPassword(EditTextEmail.getText().toString(), EditTextPassword.getText().toString())
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override

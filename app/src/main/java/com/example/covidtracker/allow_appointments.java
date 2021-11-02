@@ -63,12 +63,13 @@ public class allow_appointments extends AppCompatActivity {
         userData = FirebaseFirestore.getInstance();
 
         List<String> list = new ArrayList<>();
-        for(int i = 5; i < 100; i++){
+        for(int i = 99; i > 17; i--){
             if(i == 99){
                 list.add("99+");
-                break;
             }
-            list.add(String.valueOf(i));
+            else {
+                list.add(String.valueOf(i));
+            }
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
 

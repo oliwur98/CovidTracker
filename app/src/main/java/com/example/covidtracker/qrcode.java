@@ -93,7 +93,7 @@ public class qrcode extends AppCompatActivity {
                     }
                 }
                 else{
-                    Toast.makeText(qrcode.this,"Cant generate passport, you do not have 2 doses", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(qrcode.this,"Cant generate passport, you do not have 2 doses, or have not waited two weeks after the 2:nd dose", Toast.LENGTH_SHORT).show();
                 }
             }
         });
