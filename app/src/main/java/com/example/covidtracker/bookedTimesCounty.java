@@ -90,11 +90,13 @@ public class bookedTimesCounty extends AppCompatActivity {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 boolean sameCenter = false;
+                String fullyVaccinated;
                 for(DocumentSnapshot document : queryDocumentSnapshots){
                     String center;
                     center = document.getString("center");
+                    fullyVaccinated = document.getString("booked_day_time");
                     if(center.equals(chooseCenter.getSelectedItem())) sameCenter = true;
-                    if(sameCenter){
+                    if(sameCenter && fullyVaccinated != null){
                         userArrayList.add(document.toObject(Users.class));
                     }
                     myAdapter.notifyDataSetChanged();
