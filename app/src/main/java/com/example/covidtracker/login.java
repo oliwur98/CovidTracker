@@ -69,15 +69,15 @@ public class login extends AppCompatActivity {
                     System.out.println("_-----d-d-d-dd--d-d.-f.d-f.d-fd.f-df.-df.d-f.d-fd-f.d-f.d-fd-fd-fd-f-d.f-d.f-df.d-f.d-f-df-df-dfd-f.d-f.d-f.d-f.d-.f-d.fd-");
                 }
             });
-
-            if(Admin_check.equals("bjort@gmail.com")){
+*/          System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA          " + auth.getCurrentUser());
+            if(auth.getCurrentUser().equals("com.google.firebase.auth.internal.zzx@b598769")){
                 Intent intent_admin = new Intent(login.this, Admin.class);
                 startActivity(intent_admin);
-            }*/
-            //else{
+            }
+            else{
                 Intent intent = new Intent(login.this, dashboard.class);
                 startActivity(intent);
-            //}
+            }
         }
 
 

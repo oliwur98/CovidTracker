@@ -29,8 +29,8 @@ import javax.annotation.Nonnull;
 
 public class activity_profile extends AppCompatActivity {
 
-    TextView name, county, booked;
-    TextView number,  email;
+    TextView name, county, booked, Doses;
+    TextView number, email;
     FirebaseAuth auth;
     FirebaseFirestore userData;
     String userID;
@@ -42,6 +42,7 @@ public class activity_profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         name = findViewById(R.id.name_profile);
+        Doses = (TextView) findViewById(R.id.Doses);
         number = (TextView) findViewById(R.id.number_profile);
         email = (TextView) findViewById(R.id.mail_profile);
         auth = FirebaseAuth.getInstance();
@@ -99,6 +100,14 @@ public class activity_profile extends AppCompatActivity {
                 number.setText(Pnumber);
                 email.setText(mail);
                 county.setText(adress);
+            }
+        });
+        DocumentReference documentReference3 = userData.collection("Users").document(userID);
+        documentReference3.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                Doses.setText("You have taken "+value.getString("Doses")+ " doses");
+
             }
         });
     }

@@ -354,7 +354,7 @@ public class dashboard extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
         else{
-            super.onBackPressed();
+            //super.onBackPressed();
         }
     }
     void updateNumbers(){
