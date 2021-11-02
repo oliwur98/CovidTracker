@@ -56,7 +56,7 @@ public class booking extends AppCompatActivity {
     private String month_booked;
     private String day_booked;
     String UserID;
-    private CheckBox yes1,yes2,yes3;
+    private CheckBox yes1,yes2,yes3,no1,no2,no3;
     private String email;
 
 
@@ -71,6 +71,9 @@ public class booking extends AppCompatActivity {
         yes1 = (CheckBox) findViewById(R.id.yes1);
         yes2 = (CheckBox) findViewById(R.id.yes2);
         yes3 = (CheckBox) findViewById(R.id.yes3);
+        no1 = (CheckBox) findViewById(R.id.no1);
+        no2 = (CheckBox) findViewById(R.id.no2);
+        no3 = (CheckBox) findViewById(R.id.no3);
 
         SpinnerVaccine = (Spinner) findViewById(R.id.spinner_vaccine);
         String[] items = new String[]{" ", "Pfizer", "Moderna"};
@@ -332,7 +335,32 @@ public class booking extends AppCompatActivity {
         }
         else counter++;
 
-        if(counter == 3){
+        if(yes1.isChecked() && no1.isChecked()){
+            Toast.makeText(booking.this, "You can't check both yes and no!", Toast.LENGTH_SHORT).show();
+        }
+        else if(!yes1.isChecked() && !no1.isChecked()){
+            Toast.makeText(booking.this, "You have to check the boxes!", Toast.LENGTH_SHORT).show();
+        }
+        else counter++;
+
+        if(yes2.isChecked() && no2.isChecked()){
+            Toast.makeText(booking.this, "You can't check both yes and no!", Toast.LENGTH_SHORT).show();
+        }
+        else if(!yes2.isChecked() && !no2.isChecked()){
+            Toast.makeText(booking.this, "You have to chech the boxes!", Toast.LENGTH_SHORT).show();
+        }
+        else counter++;
+
+        if(yes3.isChecked() && no3.isChecked()){
+            Toast.makeText(booking.this, "You can't check both yes and no!", Toast.LENGTH_SHORT).show();
+        }
+        else if(!yes3.isChecked() && !no3.isChecked()){
+            Toast.makeText(booking.this, "You have to check the boxes!", Toast.LENGTH_SHORT).show();
+        }
+        else counter++;
+
+
+        if(counter == 6){
             return true;
         }
         else return false;
